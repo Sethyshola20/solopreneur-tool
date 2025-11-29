@@ -1,0 +1,3 @@
+-- Placeholder migration file created to satisfy Drizzle migration runner.
+-- Original migration was applied and the file was removed.
+-- No operations needed.

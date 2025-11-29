@@ -1,0 +1,171 @@
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SignInFormType, signinSchema, SignupFormType, signupSchema, useSignIn, useSignUp } from "@/lib/connection";
+
+
+export function ConnectionForm() {
+    const signUp = useSignUp();
+    const signIn = useSignIn();
+
+    const loginForm = useForm<SignInFormType>({
+        resolver: zodResolver(signinSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    });
+
+    const signupForm = useForm<SignupFormType>({
+        resolver: zodResolver(signupSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+            confirmPassword: "",
+        },
+    });
+
+    return (
+        <Tabs defaultValue="login" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="login">Sign In</TabsTrigger>
+                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+            </TabsList>
+            <TabsContent value="login">
+                <Form {...loginForm}>
+                    <form
+                        onSubmit={loginForm.handleSubmit(signIn)}
+                        className="space-y-4"
+                    >
+                        <FormField
+                            control={loginForm.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="your@email.com" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={loginForm.control}
+                            name="password"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type="password"
+                                            placeholder="••••••••"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <Button type="submit" className="w-full">
+                            Sign In
+                        </Button>
+                    </form>
+                </Form>
+            </TabsContent>
+
+            <TabsContent value="signup">
+                <Form {...signupForm}>
+                    <form
+                        onSubmit={signupForm.handleSubmit(signUp)}
+                        className="space-y-4"
+                    >
+                        <FormField
+                            control={signupForm.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Name " {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={signupForm.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="your@email.com" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={signupForm.control}
+                            name="password"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type="password"
+                                            placeholder="••••••••"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={signupForm.control}
+                            name="confirmPassword"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Confirm Password</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type="password"
+                                            placeholder="••••••••"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <Button type="submit" className="w-full">
+                            Sign Up
+                        </Button>
+                    </form>
+                </Form>
+            </TabsContent>
+        </Tabs>
+    );
+}

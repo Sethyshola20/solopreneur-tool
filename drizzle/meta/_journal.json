@@ -1,0 +1,62 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1764179443414,
+      "tag": "0000_dusty_magus",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1764179914621,
+      "tag": "0001_great_boomer",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1764180095178,
+      "tag": "0002_rapid_bedlam",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1764183245377,
+      "tag": "0003_sudden_squadron_sinister",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1764186736024,
+      "tag": "0004_lying_black_queen",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1764186896342,
+      "tag": "0005_stale_pepper_potts",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1764198870722,
+      "tag": "0006_light_thena",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1764429412911,
+      "tag": "0007_reflective_doctor_spectrum",
+      "breakpoints": true
+    }
+  ]
+}
