@@ -19,6 +19,7 @@ export async function getStripeAccount(id: string): Promise<StripeAccount> {
     const { data, error } = await request<StripeAccount>(`/stripe/accounts/${id}`, {
         method: "GET"
     })
+    console.log('stripe stats : ', { data, error })
     if (error) throw new Error(error)
     if (!data) throw new Error('Account not found')
     return data;

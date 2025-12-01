@@ -1,9 +1,6 @@
-// apiService.ts or api/index.ts
-
-const API_BASE_URL = 'http://localhost:3000/api'; // Replace with your actual API base URL
-
+const API_BASE_URL = 'http://localhost:3000/api';
 export interface RequestOptions extends Omit<RequestInit, 'body'> {
-    data?: any; // For POST/PUT/PATCH request bodies
+    data?: any;
 }
 
 export interface APIResponse<T> {
@@ -11,7 +8,6 @@ export interface APIResponse<T> {
     error: string | null;
 }
 
-// A generic utility function for making API calls
 export const request = async <T = any>(
     endpoint: string,
     options: RequestOptions = {}
@@ -38,12 +34,10 @@ export const request = async <T = any>(
 
 
         if (!response.ok) {
-            // Handle HTTP error statuses (4xx, 5xx)
             const errorData = await response.json().catch(() => ({}));
             throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
         }
 
-        // Handle successful response with no body (e.g., 204 No Content)
         if (response.status === 204) {
             return {} as APIResponse<T>;
         }
@@ -51,8 +45,7 @@ export const request = async <T = any>(
 
         return finalData as APIResponse<T>;
     } catch (error) {
-        // Handle network errors or errors thrown above
         console.error("API Request Failed:", error);
-        throw error; // Re-throw the error for the caller to handle
+        throw error;
     }
 };

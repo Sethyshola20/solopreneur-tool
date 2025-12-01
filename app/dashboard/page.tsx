@@ -44,8 +44,8 @@ export default function DashboardPage() {
 
         // Calculate non-recurring revenue stats from recettesList
         recettesList?.forEach(r => {
-            const date = new Date(r.recettes.date);
-            const amount = Number(r.recettes.amount);
+            const date = new Date(r.date);
+            const amount = Number(r.amount);
 
             totalRevenue += amount;
 
@@ -63,8 +63,8 @@ export default function DashboardPage() {
         });
 
         // --- Non-Recurring Financials ---
-        const pendingAmount = facturesList?.filter(f => f.factures.status === 'pending')
-            .reduce((sum, f) => sum + Number(f.factures.total), 0) || 0;
+        const pendingAmount = facturesList?.filter(f => f.status === 'pending')
+            .reduce((sum, f) => sum + Number(f.total), 0) || 0;
         const taxDue = yearRevenue * 0.22; // Assuming 22% tax on yearly revenue
 
         const growthTrend = lastMonthRevenue > 0
@@ -199,10 +199,10 @@ export default function DashboardPage() {
             <div className="grid gap-4 md:grid-cols-7">
                 {/* This chart should probably show both MRR evolution and non-recurring revenue */}
                 <RevenueChart
-                    recettes={recettesList?.map(r => ({ ...r.recettes, amount: Number(r.recettes.amount) })) || []}
+                    recettes={recettesList?.map(r => ({ ...r, amount: Number(r.amount) })) || []}
                     stripeStats={stripeStats} // Pass the time series data for charting MRR
                 />
-                <RecentActivity factures={facturesList?.map(f => f.factures) || []} />
+                <RecentActivity factures={facturesList || []} />
             </div>
 
             {/* --- Summary Counts --- */}

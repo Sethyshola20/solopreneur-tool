@@ -88,7 +88,6 @@ export default function StripePage() {
         return acc;
     }, {} as Record<string, typeof products>);
 
-    // --- Loading Skeleton ---
     if (isLoading) {
         return (
             <div className="space-y-8 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
@@ -96,9 +95,9 @@ export default function StripePage() {
                     <Skeleton className="h-8 w-64" />
                     <Skeleton className="h-4 w-96" />
                 </div>
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {[...Array(4)].map((_, i) => (
-                        <Card key={i} className="h-[380px] overflow-hidden">
+                <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {[...Array(3)].map((_, i) => (
+                        <Card key={i} className="w-[280px] min-h-[380px] flex flex-col transition-all hover:shadow-md">
                             <CardHeader className="space-y-2 pb-4">
                                 <Skeleton className="h-5 w-3/4" />
                                 <Skeleton className="h-3 w-1/2" />
@@ -318,7 +317,7 @@ export default function StripePage() {
                             onClick={handleDelete}
                             disabled={deleteMutation.isPending}
                         >
-                            {deleteMutation.isPending ? 'Suppression…' : 'Supprimer'}
+                            {deleteMutation.isPending ? 'Déconnexion en cours…' : 'Déconnecter le compte'}
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

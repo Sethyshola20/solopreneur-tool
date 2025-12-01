@@ -37,8 +37,8 @@ export function RecentActivity({ factures }: RecentActivityProps) {
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
-                    {recentFactures.map((facture) => (
-                        <div key={facture.id} className="flex items-center justify-between">
+                    {recentFactures.map((facture, index) => (
+                        <div key={index} className="flex items-center justify-between">
                             <div className="flex-1">
                                 <p className="text-sm font-medium">{facture.number}</p>
                                 <p className="text-xs text-muted-foreground">

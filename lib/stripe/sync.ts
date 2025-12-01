@@ -7,25 +7,21 @@ import { nanoid } from 'nanoid';
 export async function syncProducts(accountId: string, userId: string) {
     const stripe = await getStripeClient(accountId);
 
-    // Fetch products from Stripe
     const stripeProducts = await stripe.products.list({ limit: 100, active: true });
 
     const syncedProducts = [];
 
     for (const product of stripeProducts.data) {
-        // Get default price
         const defaultPrice = product.default_price
             ? await stripe.prices.retrieve(product.default_price as string)
             : null;
 
-        // Upsert product
         const [existingProduct] = await db.select()
             .from(products)
             .where(eq(products.stripeProductId, product.id))
             .limit(1);
 
         if (existingProduct) {
-            // Update
             const [updated] = await db.update(products)
                 .set({
                     name: product.name,
@@ -44,7 +40,6 @@ export async function syncProducts(accountId: string, userId: string) {
 
             syncedProducts.push(updated);
         } else {
-            // Insert
             const [created] = await db.insert(products).values({
                 id: nanoid(),
                 userId,
@@ -65,7 +60,6 @@ export async function syncProducts(accountId: string, userId: string) {
         }
     }
 
-    // Update last sync time
     await db.update(stripeAccounts)
         .set({ lastSyncAt: new Date() })
         .where(eq(stripeAccounts.id, accountId));
@@ -76,7 +70,6 @@ export async function syncProducts(accountId: string, userId: string) {
 export async function syncSubscriptions(accountId: string, userId: string) {
     const stripe = await getStripeClient(accountId);
 
-    // Fetch subscriptions from Stripe
     const stripeSubscriptions = await stripe.subscriptions.list({ limit: 100 });
 
     const syncedSubscriptions = [];

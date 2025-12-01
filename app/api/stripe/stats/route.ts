@@ -54,6 +54,7 @@ export async function GET(request: Request) {
         // --- 1. Setup Reporting Window and Keys ---
         const today = new Date();
         const startDate = new Date();
+        startDate.setDate(1); // Fix: Start from 1st of month to avoid overflow
         startDate.setMonth(today.getMonth() - REPORTING_MONTHS);
         const startTimestamp = Math.floor(startDate.getTime() / 1000);
 
