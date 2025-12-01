@@ -10,7 +10,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Edit, Trash2, Plus, CircleUserIcon, Users } from 'lucide-react';
+import { Edit, Plus, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useClients, useDeleteClient } from '@/hooks/use-clients';
 import { ClientDialog } from './client-dialog';
@@ -109,4 +109,3 @@ export function ClientTable() {
         </>
     );
 }
-
