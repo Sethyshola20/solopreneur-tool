@@ -29,7 +29,7 @@ import { SignOut } from "@/lib/connection";
 import { Settings } from "@/lib/use-cases/settings";
 
 
-export function SidebarUserNav({ user, company }: { user: User | null, company: Settings }) {
+export function SidebarUserNav({ user, company }: { user: User | null, company: Settings | undefined }) {
     const { setTheme, resolvedTheme } = useTheme();
 
     return (
@@ -45,7 +45,7 @@ export function SidebarUserNav({ user, company }: { user: User | null, company: 
                             <Avatar className="size-8 rounded-lg grayscale">
                                 <AvatarImage
                                     src={
-                                        company.logoUrl ?? `https://avatar.vercel.sh/${user?.email}`
+                                        company?.logoUrl ?? `https://avatar.vercel.sh/${user?.email}`
                                     }
                                     alt={user?.email ?? "User Avatar"}
                                 />
@@ -75,7 +75,7 @@ export function SidebarUserNav({ user, company }: { user: User | null, company: 
                         <DropdownMenuLabel className="p-0 font-normal">
                             <div className="flex items-center gap-3 px-2 py-2.5 text-left">
                                 <Avatar className="h-10 w-10 rounded-lg border-2 border-primary/10">
-                                    <AvatarImage src={company.logoUrl ?? `https://avatar.vercel.sh/${user?.email}`} alt={user?.name ?? "User Avatar"} />
+                                    <AvatarImage src={company?.logoUrl ?? `https://avatar.vercel.sh/${user?.email}`} alt={user?.name ?? "User Avatar"} />
                                     <AvatarFallback className="rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-white font-semibold">
                                         {user?.name?.charAt(0)}
                                     </AvatarFallback>
