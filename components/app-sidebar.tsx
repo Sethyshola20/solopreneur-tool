@@ -74,7 +74,7 @@ export async function AppSidebar() {
                         <BarChart3 className="h-4 w-4" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-sm font-semibold">{company[0].companyName}</span>
+                        <span className="text-sm font-semibold">{company[0]?.companyName}</span>
                         <span className="text-xs text-muted-foreground">{user?.name}</span>
                     </div>
                 </div>
