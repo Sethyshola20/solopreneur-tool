@@ -10,7 +10,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Edit, Plus, FileIcon } from 'lucide-react';
+import { Edit, Plus, FileIcon, CreditCard } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useDevisList, useDeleteDevis } from '@/hooks/use-devis';
 import { DevisDialog } from './devis-dialog';
@@ -74,7 +74,7 @@ export function DevisTable() {
         <>
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
-                    <CardTitle><FileIcon /></CardTitle>
+                    <CardTitle className='px-4'><CreditCard /></CardTitle>
                     <Button onClick={handleCreate}>
                         <Plus className="mr-2 h-4 w-4" /> Nouveau Devis
                     </Button>

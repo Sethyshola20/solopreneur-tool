@@ -8,14 +8,9 @@ import { successResponse } from "@/lib/api/response";
 
 // --- Configuration ---
 const REPORTING_MONTHS = 12;
-// Data is considered stale if it hasn't been updated in 24 hours (86,400,000 ms)
-const STALENESS_THRESHOLD = 24 * 60 * 60 * 1000;
+// Data is considered stale if it hasn't been updated in 1 hour (3600000 ms)
+const STALENESS_THRESHOLD = 60 * 60 * 1000;
 
-// --- Helper Functions ---
-
-/**
- * Calculates the monthly recurring revenue (MRR) value for a single Stripe price object.
- */
 const calculateMRR = (price: Stripe.Price): number => {
     if (!price || !price.recurring) return 0;
 
@@ -36,9 +31,6 @@ const calculateMRR = (price: Stripe.Price): number => {
     }
 };
 
-/**
- * Generates a consistent YYYY-MM key from a Date object.
- */
 const getMonthKey = (date: Date): string => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -66,6 +58,9 @@ export async function GET(request: Request) {
             expectedMonthKeys.push(getMonthKey(monthKeyDate));
         }
 
+        const { searchParams } = new URL(request.url);
+        const forceRefresh = searchParams.get('force_refresh') === 'true';
+
         const accounts = await db
             .select({
                 id: stripeAccounts.id,
@@ -82,10 +77,11 @@ export async function GET(request: Request) {
             // 🚀 CACHING LOGIC: ATTEMPT TO READ FROM DB FIRST
             // =======================================================
 
-            const cachedAnalytics = await db.query.monthlyAnalytics.findMany({
-                where: inArray(monthlyAnalytics.monthKey, expectedMonthKeys),
-                orderBy: desc(monthlyAnalytics.monthKey),
-            });
+            const cachedAnalytics = await db
+                .select()
+                .from(monthlyAnalytics)
+                .where(inArray(monthlyAnalytics.monthKey, expectedMonthKeys))
+                .orderBy(desc(monthlyAnalytics.monthKey));
 
             // Check 1: Do we have all the required records?
             const isComplete = cachedAnalytics.length >= REPORTING_MONTHS;
@@ -96,7 +92,7 @@ export async function GET(request: Request) {
                 ? (today.getTime() - mostRecentRecord.updatedAt.getTime() < STALENESS_THRESHOLD)
                 : false;
 
-            if (isComplete && isFresh) {
+            if (!forceRefresh && isComplete && isFresh) {
                 // Data is complete and fresh, return from cache.
                 const currentMRR = mostRecentRecord.endingMRR;
                 const currentCustomers = mostRecentRecord.endingCustomers;
@@ -227,15 +223,15 @@ export async function GET(request: Request) {
                     .onConflictDoUpdate({
                         target: [monthlyAnalytics.accountId, monthlyAnalytics.monthKey],
                         set: {
-                            startingMRR: monthlyAnalytics.startingMRR,
-                            endingMRR: monthlyAnalytics.endingMRR,
-                            newMRR: monthlyAnalytics.newMRR,
-                            churnedMRR: monthlyAnalytics.churnedMRR,
-                            startingCustomers: monthlyAnalytics.startingCustomers,
-                            endingCustomers: monthlyAnalytics.endingCustomers,
-                            newCustomers: monthlyAnalytics.newCustomers,
-                            churnedCustomers: monthlyAnalytics.churnedCustomers,
-                            customerChurnRate: monthlyAnalytics.customerChurnRate,
+                            startingMRR: sql`excluded.starting_mrr`,
+                            endingMRR: sql`excluded.ending_mrr`,
+                            newMRR: sql`excluded.new_mrr`,
+                            churnedMRR: sql`excluded.churned_mrr`,
+                            startingCustomers: sql`excluded.starting_customers`,
+                            endingCustomers: sql`excluded.ending_customers`,
+                            newCustomers: sql`excluded.new_customers`,
+                            churnedCustomers: sql`excluded.churned_customers`,
+                            customerChurnRate: sql`excluded.customer_churn_rate`,
                             updatedAt: sql`NOW()`, // Update the timestamp
                         },
                     });

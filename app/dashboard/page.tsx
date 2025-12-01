@@ -19,6 +19,7 @@ import {
     Activity, // For Growth/Trend
 } from 'lucide-react';
 import { useStripeStats } from '@/hooks/use-stripe';
+import { StripeAccountsList } from '@/components/dashboard/stripe-accounts-list';
 
 export default function DashboardPage() {
     const { data: clients } = useClients();
@@ -111,12 +112,12 @@ export default function DashboardPage() {
     const primaryChurnRate = stats.combinedStripeData?.latestCustomerChurnRate || 0;
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h1 className="text-lg font-semibold md:text-2xl">Tableau de Bord</h1>
             </div>
 
-            {/* --- PRIMARY RECURRING METRICS (Stripe) --- */}
+            {/* --- SECTION 1: KEY FINANCIAL METRICS (Global) --- */}
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <StatsCard
                     title="MRR Total"
@@ -131,30 +132,9 @@ export default function DashboardPage() {
                     icon={Calendar}
                 />
                 <StatsCard
-                    title="Clients Actifs"
-                    value={stats.combinedStripeData?.activeCustomers || 0}
-                    description="Clients avec un abonnement actif"
-                    icon={Users}
-                />
-                <StatsCard
-                    title="Taux de Churn (Mois)"
-                    value={`${primaryChurnRate.toFixed(2)}%`}
-                    description="Clients perdus le mois dernier"
-                    icon={UserX}
-                    trend={{
-                        value: primaryChurnRate,
-                        isPositive: primaryChurnRate <= 0, // Churn is good if it's 0 or negative (rev churn)
-                        //isWarning: primaryChurnRate > 5, // Custom warning logic
-                    }}
-                />
-            </div>
-
-            {/* --- NON-RECURRING/OPERATIONAL METRICS --- */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <StatsCard
                     title="CA du Mois (Non-Récur.)"
                     value={formatCurrency(stats.monthRevenue)}
-                    description="Chiffre d'affaires mensuel hors abonnement"
+                    description="Hors abonnements"
                     icon={Euro}
                     trend={{
                         value: Math.round(stats.growthTrend),
@@ -164,8 +144,40 @@ export default function DashboardPage() {
                 <StatsCard
                     title="Factures en Attente"
                     value={formatCurrency(stats.pendingAmount)}
-                    description="Montant total à encaisser"
+                    description="Montant à encaisser"
                     icon={FileText}
+                />
+            </div>
+
+            {/* --- SECTION 2: CHARTS & ACTIVITY --- */}
+            <div className="grid gap-4 md:grid-cols-7">
+                <RevenueChart
+                    recettes={recettesList?.map(r => ({ ...r, amount: Number(r.amount) })) || []}
+                    stripeStats={stripeStats} // Pass the time series data for charting MRR
+                />
+                <RecentActivity factures={facturesList || []} />
+            </div>
+
+            {/* --- SECTION 3: STRIPE ACCOUNTS BREAKDOWN --- */}
+            <StripeAccountsList stripeStats={stripeStats} />
+
+            {/* --- SECTION 4: OPERATIONAL SUMMARY --- */}
+            <div className="grid gap-4 md:grid-cols-4">
+                <StatsCard
+                    title="Clients Actifs (Stripe)"
+                    value={stats.combinedStripeData?.activeCustomers || 0}
+                    description="Abonnements en cours"
+                    icon={Users}
+                />
+                <StatsCard
+                    title="Taux de Churn"
+                    value={`${primaryChurnRate.toFixed(2)}%`}
+                    description="Moyenne sur tous les comptes"
+                    icon={UserX}
+                    trend={{
+                        value: primaryChurnRate,
+                        isPositive: primaryChurnRate <= 0,
+                    }}
                 />
                 <StatsCard
                     title="CA Annuel (Non-Récur.)"
@@ -176,49 +188,9 @@ export default function DashboardPage() {
                 <StatsCard
                     title="Charges Estimées"
                     value={formatCurrency(stats.taxDue)}
-                    description="Cotisations sociales (22% estimé)"
+                    description="URSSAF (22% estimé)"
                     icon={AlertCircle}
                 />
-            </div>
-
-            {/* --- Stripe Account Breakdown --- */}
-            {stripeStats && stripeStats.length > 0 && (
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    {stripeStats.map(stat => (
-                        <StatsCard
-                            key={stat.accountId}
-                            title={`MRR - ${stat.accountName}`}
-                            value={formatCurrency(stat.currentSnapshot.mrr)}
-                            description={`${stat.currentSnapshot.activeCustomers} clients`}
-                            icon={TrendingUp}
-                        />
-                    ))}
-                </div>
-            )}
-
-            <div className="grid gap-4 md:grid-cols-7">
-                {/* This chart should probably show both MRR evolution and non-recurring revenue */}
-                <RevenueChart
-                    recettes={recettesList?.map(r => ({ ...r, amount: Number(r.amount) })) || []}
-                    stripeStats={stripeStats} // Pass the time series data for charting MRR
-                />
-                <RecentActivity factures={facturesList || []} />
-            </div>
-
-            {/* --- Summary Counts --- */}
-            <div className="grid gap-4 md:grid-cols-3">
-                <div className="p-4 border rounded-lg">
-                    <p className="text-sm text-muted-foreground">Total Clients</p>
-                    <p className="text-2xl font-bold">{stats.clientCount}</p>
-                </div>
-                <div className="p-4 border rounded-lg">
-                    <p className="text-sm text-muted-foreground">Total Devis</p>
-                    <p className="text-2xl font-bold">{stats.devisCount}</p>
-                </div>
-                <div className="p-4 border rounded-lg">
-                    <p className="text-sm text-muted-foreground">Total Factures</p>
-                    <p className="text-2xl font-bold">{stats.facturesCount}</p>
-                </div>
             </div>
         </div>
     );

@@ -9,7 +9,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Download } from 'lucide-react';
+import { Download, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { format } from 'date-fns';
 import { useRecettesList } from '@/hooks/use-recettes';
@@ -53,7 +53,7 @@ export function RecettesTable() {
     return (
         <Card>
             <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle></CardTitle>
+                <CardTitle className='px-4'><FileText /></CardTitle>
                 <Button onClick={exportToCSV} disabled={!recettesList || recettesList.length === 0}>
                     <Download className="mr-2 h-4 w-4" /> Exporter CSV
                 </Button>

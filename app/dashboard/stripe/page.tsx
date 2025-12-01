@@ -74,8 +74,8 @@ export default function StripePage() {
         toast.promise(
             deleteMutation.mutateAsync(accountToDelete.id).then(() => setAccountToDelete(null)),
             {
-                loading: 'Suppression en cours…',
-                success: ' Compte Stripe supprimé !',
+                loading: 'Deconnexion en cours…',
+                success: ' Compte Stripe deconnecté !',
                 error: (error: Error) => ' Erreur : ' + error.message,
             }
         );

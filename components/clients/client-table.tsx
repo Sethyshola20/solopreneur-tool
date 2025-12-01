@@ -10,7 +10,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Edit, Trash2, Plus, CircleUserIcon } from 'lucide-react';
+import { Edit, Trash2, Plus, CircleUserIcon, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useClients, useDeleteClient } from '@/hooks/use-clients';
 import { ClientDialog } from './client-dialog';
@@ -59,7 +59,7 @@ export function ClientTable() {
         <>
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
-                    <CardTitle><CircleUserIcon /></CardTitle>
+                    <CardTitle className='px-4'><Users /></CardTitle>
                     <Button onClick={handleCreate}>
                         <Plus className="mr-2 h-4 w-4" /> Nouveau Client
                     </Button>

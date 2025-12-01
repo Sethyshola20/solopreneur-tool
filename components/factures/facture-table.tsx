@@ -9,7 +9,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Edit, Trash2, Plus } from 'lucide-react';
+import { Edit, Trash2, Plus, Receipt } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useDeleteFacture, useFacturesList } from '@/hooks/use-factures';
 import { format } from 'date-fns';
@@ -78,7 +78,7 @@ export function FactureTable() {
         <>
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
-                    <CardTitle><IconBible /></CardTitle>
+                    <CardTitle className='px-4'><Receipt /></CardTitle>
                     <Button onClick={handleCreate}>
                         <Plus className="mr-2 h-4 w-4" /> Nouvelle Facture
                     </Button>

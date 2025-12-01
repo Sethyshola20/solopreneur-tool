@@ -5,6 +5,7 @@ import { db } from '@/lib/db/drizzle';
 import { factures, facturesItems, clients, stripeAccounts } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
+import { errorResponse } from '@/lib/api/response';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
     apiVersion: "2025-11-17.clover",
@@ -15,7 +16,7 @@ export async function POST(req: Request) {
     const signature = (await headers()).get('stripe-signature');
 
     if (!signature) {
-        return NextResponse.json({ error: 'No signature' }, { status: 400 });
+        return errorResponse("No stripe signature")
     }
 
     let event: Stripe.Event;
@@ -28,7 +29,7 @@ export async function POST(req: Request) {
         );
     } catch (err) {
         console.error('Webhook signature verification failed:', err);
-        return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
+        return errorResponse("Invalid signature")
     }
 
     try {
@@ -54,10 +55,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ received: true });
     } catch (error) {
         console.error('Error processing webhook:', error);
-        return NextResponse.json(
-            { error: 'Webhook processing failed' },
-            { status: 500 }
-        );
+        return errorResponse("Error processing webhook : ")
     }
 }
 
@@ -66,7 +64,7 @@ async function handleInvoiceEvent(invoice: Stripe.Invoice) {
     const stripeAccount = await db
         .select()
         .from(stripeAccounts)
-        .where(eq(stripeAccounts.stripeAccountId, invoice.account as string))
+        .where(eq(stripeAccounts.stripeAccountId, invoice.id))
         .limit(1);
 
     if (!stripeAccount.length) {
@@ -154,7 +152,7 @@ async function handleInvoiceEvent(invoice: Stripe.Invoice) {
                     factureId: existingFacture[0].id,
                     description: line.description || 'No description',
                     quantity: (line.quantity || 1).toString(),
-                    price: ((line.price?.unit_amount || 0) / 100).toString(),
+                    price: (Number(line.pricing?.price_details?.price) / 100).toString(),
                     total: ((line.amount || 0) / 100).toString(),
                 }))
             );
@@ -178,7 +176,7 @@ async function handleInvoiceEvent(invoice: Stripe.Invoice) {
                     factureId: newFacture.id,
                     description: line.description || 'No description',
                     quantity: (line.quantity || 1).toString(),
-                    price: ((line.price?.unit_amount || 0) / 100).toString(),
+                    price: (Number(line.pricing?.price_details?.price) / 100).toString(),
                     total: ((line.amount || 0) / 100).toString(),
                 }))
             );

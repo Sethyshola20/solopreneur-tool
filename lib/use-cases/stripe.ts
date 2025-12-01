@@ -1,7 +1,7 @@
 import { type InferSelectModel } from 'drizzle-orm';
 import { stripeAccounts, products } from '@/lib/db/schema';
 import { StripeAccountSchema } from '@/lib/validators/stripe';
-import { APIResponse, request } from '@/api_service';
+import { request } from '@/api_service';
 import { StripeStats } from '@/types/stripe';
 
 export type StripeAccount = InferSelectModel<typeof stripeAccounts>;
@@ -26,7 +26,7 @@ export async function getStripeAccount(id: string): Promise<StripeAccount> {
 }
 
 export async function getStripeStats() {
-    const { data, error } = await request<StripeStats>(`/stripe/stats`, {
+    const { data, error } = await request<StripeStats>(`/stripe/stats?force_refresh=true`, {
         method: "GET",
     });
     if (error) throw new Error(error)
