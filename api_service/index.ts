@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://solopreneur-tool.vercel.app/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://solopreneur.sethylaleye.com/api';
 export interface RequestOptions extends Omit<RequestInit, 'body'> {
     data?: any;
 }

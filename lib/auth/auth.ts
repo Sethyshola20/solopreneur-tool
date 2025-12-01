@@ -10,7 +10,7 @@ export const auth = betterAuth({
         provider: "pg",
         schema: authSchema,
     }),
-    trustedOrigins: ["http://localhost:3000", "https://solopreneur-tool.sethylaleye.com"],
+    trustedOrigins: ["http://localhost:3000", "https://solopreneur.sethylaleye.com"],
     emailAndPassword: {
         enabled: true,
     },
