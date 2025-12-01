@@ -7,7 +7,7 @@ import { useSettings } from '@/hooks/use-settings';
 export default function SettingsPage() {
     const { data: settings, isLoading, error } = useSettings();
     if (isLoading) return <div>Chargement...</div>;
-    if (error || !settings) return <div>Erreur lors du chargement des paramètres</div>;
+    if (error) return <div>Erreur lors du chargement des paramètres</div>;
 
     return (
         <div className="space-y-4">

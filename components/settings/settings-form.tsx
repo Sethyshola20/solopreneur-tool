@@ -20,7 +20,7 @@ import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 
 interface SettingsFormProps {
-    initialData?: SettingsSchema;
+    initialData?: SettingsSchema | null;
 }
 
 export function SettingsForm({ initialData }: SettingsFormProps) {
