@@ -17,9 +17,9 @@ export const request = async <T = any>(
 
     const config: RequestInit = {
         method,
+        credentials: "include",
         headers: {
             'Content-Type': 'application/json',
-            credentials: "include",
             ...headers,
         },
         ...rest,
