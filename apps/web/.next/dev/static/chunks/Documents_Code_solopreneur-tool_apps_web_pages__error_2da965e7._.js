@@ -1,0 +1,15 @@
+(globalThis.TURBOPACK_CHUNK_LISTS || (globalThis.TURBOPACK_CHUNK_LISTS = [])).push({
+    script: typeof document === "object" ? document.currentScript : undefined,
+    chunks: [
+  "static/chunks/b2c97_next_dist_compiled_72befbfc._.js",
+  "static/chunks/b2c97_next_dist_shared_lib_0b4d92fa._.js",
+  "static/chunks/b2c97_next_dist_client_3bc41982._.js",
+  "static/chunks/b2c97_next_dist_8e416082._.js",
+  "static/chunks/b2c97_next_error_aa4a256b.js",
+  "static/chunks/[next]_entry_page-loader_ts_9cfe2d13._.js",
+  "static/chunks/24f19_react-dom_80e185c9._.js",
+  "static/chunks/Documents_Code_solopreneur-tool_59cf387c._.js",
+  "static/chunks/[root-of-the-server]__f5c0f62d._.js"
+],
+    source: "entry"
+});
