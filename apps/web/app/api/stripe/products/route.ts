@@ -4,6 +4,7 @@ import { runWithAuthAPI } from "@/lib/api/run-with-auth";
 import { eq } from "drizzle-orm";
 import { syncProducts } from "@/lib/stripe/sync";
 import { successResponse, errorResponse } from "@/lib/api/response";
+import z from "zod";
 
 export async function GET(req: Request) {
     return runWithAuthAPI(async (user) => {
@@ -26,17 +27,20 @@ export async function GET(req: Request) {
     });
 }
 
+const productSyncParams = z.object({
+    accountId: z.string(),
+});
 export async function POST(req: Request) {
     return runWithAuthAPI(async (user) => {
         const body = await req.json();
-        const { accountId } = body;
+        const validatedBody = productSyncParams.parse(body);
 
-        if (!accountId) {
+        if (!validatedBody.accountId) {
             return errorResponse("Account ID required", 400);
         }
 
         // Sync products from Stripe
-        const syncedProducts = await syncProducts(accountId, user.id);
+        const syncedProducts = await syncProducts(validatedBody.accountId, user.id);
 
         return successResponse({
             success: true,

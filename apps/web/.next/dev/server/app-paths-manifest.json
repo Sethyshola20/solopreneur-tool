@@ -4,9 +4,11 @@
   "/api/devis/route": "app/api/devis/route.js",
   "/api/factures/route": "app/api/factures/route.js",
   "/api/recettes/route": "app/api/recettes/route.js",
-  "/api/settings/route": "app/api/settings/route.js",
+  "/api/stripe/accounts/[id]/route": "app/api/stripe/accounts/[id]/route.js",
   "/api/stripe/accounts/route": "app/api/stripe/accounts/route.js",
   "/api/stripe/products/route": "app/api/stripe/products/route.js",
   "/api/stripe/stats/route": "app/api/stripe/stats/route.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/stripe/page": "app/dashboard/stripe/page.js",
   "/page": "app/page.js"
 }

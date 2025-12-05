@@ -510,14 +510,14 @@ const auth = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Co
 __turbopack_context__.s([
     "config",
     ()=>config,
-    "middleware",
-    ()=>middleware
+    "proxy",
+    ()=>proxy
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$node_modules$2f$next$2f$server$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/Code/solopreneur-tool/node_modules/next/server.js [middleware] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$apps$2f$web$2f$lib$2f$auth$2f$auth$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/Code/solopreneur-tool/apps/web/lib/auth/auth.ts [middleware] (ecmascript)");
 ;
 ;
-async function middleware(request) {
+async function proxy(request) {
     const { pathname } = request.nextUrl;
     // Handle CORS for API routes FIRST
     if (pathname.startsWith('/api')) {
@@ -526,11 +526,11 @@ async function middleware(request) {
         const allowedOrigins = [
             'http://localhost:3000',
             'http://localhost:8081',
-            'http://localhost:19006',
             'http://127.0.0.1:3000',
             'http://127.0.0.1:8081',
             'http://127.0.0.1:19006',
-            'https://solopreneur.sethylaleye.com'
+            'https://solopreneur.sethylaleye.com',
+            'https://solopreneur-tool.vercel.app'
         ];
         // Check if origin is allowed
         const isAllowedOrigin = origin && allowedOrigins.includes(origin);

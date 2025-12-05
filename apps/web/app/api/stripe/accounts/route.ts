@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { encrypt } from "@/lib/stripe/encryption";
 import { successResponse, errorResponse } from "@/lib/api/response";
+import { syncProducts } from "@/lib/stripe/sync";
 
 
 export async function GET(req: Request) {
@@ -33,6 +34,7 @@ export async function POST(req: Request) {
         const body = await req.json();
         const validation = validateRequest(stripeAccountSchema, body);
 
+
         if (validation.errors) {
             return errorResponse(JSON.stringify(validation.errors), 400);
         }
@@ -53,6 +55,8 @@ export async function POST(req: Request) {
             isActive: validation.data.isActive,
         }).returning();
 
+
+        await syncProducts(account.id, user.id);
         // Return without sensitive data
         const { apiKey, webhookSecret, ...safeAccount } = account;
         return successResponse(safeAccount, 201);

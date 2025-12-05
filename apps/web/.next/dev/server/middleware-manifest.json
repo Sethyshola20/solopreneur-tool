@@ -1,45 +1,6 @@
 {
   "version": 3,
-  "middleware": {
-    "/": {
-      "files": [
-        "server/edge/chunks/Documents_Code_solopreneur-tool_8b63de9e._.js",
-        "server/edge/chunks/b2c97_kysely_dist_esm_operation-node_648db63f._.js",
-        "server/edge/chunks/b2c97_kysely_dist_esm_query-builder_3fd9d436._.js",
-        "server/edge/chunks/b2c97_kysely_dist_esm_parser_a64b0fc0._.js",
-        "server/edge/chunks/b2c97_kysely_dist_esm_schema_999ced51._.js",
-        "server/edge/chunks/b2c97_kysely_dist_esm_b276459c._.js",
-        "server/edge/chunks/b2c97_better-auth_dist_61d457e7._.js",
-        "server/edge/chunks/b2c97_@better-auth_core_dist_0569a18d._.js",
-        "server/edge/chunks/b2c97_jose_dist_webapi_d2127b5a._.js",
-        "server/edge/chunks/b2c97_zod_0d5b01ca._.js",
-        "server/edge/chunks/b2c97_drizzle-orm_551139fc._.js",
-        "server/edge/chunks/b2c97_@neondatabase_serverless_index_mjs_0bcaec3b._.js",
-        "server/edge/chunks/b2c97_3ea3ee60._.js",
-        "server/edge/chunks/[root-of-the-server]__0a400e4f._.js",
-        "server/edge/chunks/turbopack-Documents_Code_solopreneur-tool_apps_web_edge-wrapper_908589c6.js"
-      ],
-      "name": "middleware",
-      "page": "/",
-      "matchers": [
-        {
-          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?(?:\\/((?!_next\\/static|_next\\/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*))(\\\\.json)?[\\/#\\?]?$",
-          "originalSource": "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"
-        }
-      ],
-      "wasm": [],
-      "assets": [],
-      "env": {
-        "__NEXT_BUILD_ID": "development",
-        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "HLvFOSTi+ZrGcp8TW+XYBnf2DPpnn9mNNFmzrOds8+w=",
-        "__NEXT_PREVIEW_MODE_ID": "8b5cff3fe1482d12954c586d4f86679e",
-        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "b32400d050bbfb3de4a2faf5e5e9be5f619b4be64ba5574dde8fc34381b84f20",
-        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "b90119c50c7a97ac9876aea2e0af1ef0a9915d455c631c5216bce2431f4e2769"
-      }
-    }
-  },
-  "sortedMiddleware": [
-    "/"
-  ],
+  "middleware": {},
+  "sortedMiddleware": [],
   "functions": {}
 }

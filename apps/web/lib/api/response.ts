@@ -1,6 +1,6 @@
 export function successResponse<T>(data: T, status = 200) {
     if (status === 204) {
-        return Response.json(null, { status });
+        return new Response(null, { status });
     }
     return Response.json({ data, error: null }, { status });
 }

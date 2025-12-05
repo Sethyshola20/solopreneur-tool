@@ -515,7 +515,7 @@ __turbopack_context__.s([
 ]);
 function successResponse(data, status = 200) {
     if (status === 204) {
-        return Response.json(null, {
+        return new Response(null, {
             status
         });
     }
@@ -811,6 +811,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopre
 var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$node_modules$2f$drizzle$2d$orm$2f$sql$2f$expressions$2f$conditions$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/Code/solopreneur-tool/node_modules/drizzle-orm/sql/expressions/conditions.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$apps$2f$web$2f$lib$2f$stripe$2f$sync$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/Code/solopreneur-tool/apps/web/lib/stripe/sync.ts [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$apps$2f$web$2f$lib$2f$api$2f$response$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/Code/solopreneur-tool/apps/web/lib/api/response.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$node_modules$2f$zod$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/Documents/Code/solopreneur-tool/node_modules/zod/index.js [app-route] (ecmascript) <locals>");
+;
 ;
 ;
 ;
@@ -830,15 +832,18 @@ async function GET(req) {
         return (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$apps$2f$web$2f$lib$2f$api$2f$response$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["successResponse"])(productsList);
     });
 }
+const productSyncParams = __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$node_modules$2f$zod$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].object({
+    accountId: __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$node_modules$2f$zod$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].string()
+});
 async function POST(req) {
     return (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$apps$2f$web$2f$lib$2f$api$2f$run$2d$with$2d$auth$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["runWithAuthAPI"])(async (user)=>{
         const body = await req.json();
-        const { accountId } = body;
-        if (!accountId) {
+        const validatedBody = productSyncParams.parse(body);
+        if (!validatedBody.accountId) {
             return (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$apps$2f$web$2f$lib$2f$api$2f$response$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["errorResponse"])("Account ID required", 400);
         }
         // Sync products from Stripe
-        const syncedProducts = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$apps$2f$web$2f$lib$2f$stripe$2f$sync$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["syncProducts"])(accountId, user.id);
+        const syncedProducts = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$apps$2f$web$2f$lib$2f$stripe$2f$sync$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["syncProducts"])(validatedBody.accountId, user.id);
         return (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$apps$2f$web$2f$lib$2f$api$2f$response$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["successResponse"])({
             success: true,
             count: syncedProducts.length,

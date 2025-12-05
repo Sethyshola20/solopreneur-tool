@@ -1,0 +1,3 @@
+{
+  "/api/stripe/accounts/[id]/route": "app/api/stripe/accounts/[id]/route.js"
+}

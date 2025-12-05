@@ -62,6 +62,7 @@ export default function StripePage() {
 
 
     const handleSync = (accountId: string, accountName: string) => {
+        console.log({ accountId, accountName })
         toast.promise(syncMutation.mutateAsync(accountId), {
             loading: `Synchronisation des produits pour ${accountName}…`,
             success: (data) => `${data.count} produit${data.count !== 1 ? 's' : ''} synchronisé${data.count !== 1 ? 's' : ''} !`,

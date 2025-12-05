@@ -41,6 +41,7 @@ export function useCreateStripeAccount() {
         mutationFn: (data: StripeAccountSchema) => createStripeAccount(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['stripe-accounts'] });
+            queryClient.invalidateQueries({ queryKey: ['products'] });
         },
     });
 }
