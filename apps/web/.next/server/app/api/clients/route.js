@@ -1,0 +1,12 @@
+var R=require("../../../chunks/[turbopack]_runtime.js")("server/app/api/clients/route.js")
+R.c("server/chunks/[root-of-the-server]__3320f472._.js")
+R.c("server/chunks/b2c97_next_17dcddf5._.js")
+R.c("server/chunks/b2c97_better-auth_dist_dialect-D9ZUZA4J_mjs_8c4b55fc._.js")
+R.c("server/chunks/b2c97_next_dist_6ec63171._.js")
+R.c("server/chunks/b2c97_145efc23._.js")
+R.c("server/chunks/Documents_Code_solopreneur-tool_5ab93266._.js")
+R.c("server/chunks/b2c97_kysely_dist_esm_383b62e2._.js")
+R.c("server/chunks/[root-of-the-server]__083db1df._.js")
+R.c("server/chunks/86a40_apps_web__next-internal_server_app_api_clients_route_actions_724b113c.js")
+R.m(10167)
+module.exports=R.m(10167).exports
