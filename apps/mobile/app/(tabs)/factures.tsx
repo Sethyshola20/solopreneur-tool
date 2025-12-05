@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import { useFacturesList } from '@/hooks/use-factures';
-import { useRouter } from 'expo-router';
+import { useRouter, RelativePathString } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { FactureForm } from '@/components/factures/facture-form';
 
@@ -59,7 +59,7 @@ export default function FacturesScreen() {
                     <TouchableOpacity
                         key={facture.id}
                         style={styles.factureCard}
-                        onPress={() => router.push(`/factures/${facture.id}`)}
+                        onPress={() => router.push(`/factures/${facture.id}` as RelativePathString)}
                     >
                         <View style={styles.factureHeader}>
                             <Text style={styles.factureNumber}>{facture.number}</Text>
