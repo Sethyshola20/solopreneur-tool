@@ -41,7 +41,7 @@ export function FactureForm({ onOpenChange, initialData, factureId }: FactureFor
 
     const initalFormData = initialData
         ? {
-            clientId: initialData.clientId ?? clients?.[0].id,
+            clientId: initialData.clientId ?? clients?.[0]?.id,
             devisId: initialData.devisId ?? "",
             date: initialData.date ?? "",
             dueDate: initialData.dueDate ?? "",
@@ -57,7 +57,7 @@ export function FactureForm({ onOpenChange, initialData, factureId }: FactureFor
     const form = useForm<FactureSchema>({
         resolver: zodResolver(factureSchema),
         defaultValues: initalFormData || {
-            clientId: clients?.[0].id,
+            clientId: clients?.[0]?.id,
             devisId: "",
             date: new Date().toISOString().split("T")[0],
             dueDate: "",

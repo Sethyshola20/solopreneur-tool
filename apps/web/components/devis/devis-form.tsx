@@ -38,9 +38,10 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
 
     const { data: clients } = useClients()
 
+    console.log({ clients })
     const initalFormData = initialData
         ? {
-            clientId: initialData.clientId ?? clients?.[0].id,
+            clientId: initialData.clientId ?? clients?.[0]?.id,
             date: initialData.date ?? "",
             validUntil: initialData.validUntil ?? "",
             status: initialData.status as 'draft' | 'sent' | 'accepted' | 'rejected',
@@ -55,7 +56,7 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
     const form = useForm<DevisSchema>({
         resolver: zodResolver(devisSchema),
         defaultValues: initalFormData || {
-            clientId: clients?.[0].id,
+            clientId: clients?.[0]?.id,
             date: new Date().toISOString().split("T")[0],
             validUntil: "",
             status: 'draft' as 'draft' | 'sent' | 'accepted' | 'rejected',

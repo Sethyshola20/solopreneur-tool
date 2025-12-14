@@ -1,5 +1,6 @@
-[00:00:01.263] Server  LOG      ✓ Ready in 1062ms
-[00:01:24.650] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:00:00.943] Server  LOG      ✓ Ready in 795ms
+[00:00:01.452] Server  LOG     {}
+[00:00:03.295] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -36,11 +37,9 @@ It can also happen if the client has a browser extension installed which messes 
                         >
                   ...
 
-[00:01:34.406] Server  ERROR   2025-12-05T09:32:18.760Z ERROR [Better Auth]: Credential account not found {}
-[00:01:41.550] Server  ERROR   2025-12-05T09:32:25.906Z ERROR [Better Auth]: Credential account not found {}
-[00:01:48.609] Server  ERROR   2025-12-05T09:32:32.965Z ERROR [Better Auth]: Credential account not found {}
-[00:01:53.865] Server  ERROR   2025-12-05T09:32:38.220Z ERROR [Better Auth]: Credential account not found {}
-[00:02:21.398] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:01:47.968] Server  LOG     {}
+[00:01:50.729] Server  LOG     {}
+[00:01:52.294] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -77,19 +76,107 @@ It can also happen if the client has a browser extension installed which messes 
                         >
                   ...
 
-[00:02:22.139] Browser LOG     res {"data":[],"error":null}
-[00:02:25.514] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:02:25.515] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:04:00.061] Server  LOG      ✓ Compiled in 76ms
-[00:04:47.137] Server  LOG     {}
-[00:04:47.138] Server  LOG     {}
-[00:04:47.310] Server  ERROR   API Route Error: Error: Stripe account not found: null
-[00:04:47.414] Browser ERROR   API Request Failed: {}
-[00:06:28.870] Server  LOG     {}
-[00:06:28.870] Server  LOG     {}
-[00:06:35.206] Server  ERROR   API Route Error: TypeError: Response constructor: Invalid response status code 204
-[00:06:35.310] Browser ERROR   API Request Failed: {}
-[00:06:38.280] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:01:53.293] Browser LOG     res {"data":[],"error":null}
+[00:02:03.721] Server  LOG      ✓ Compiled in 37ms
+[00:02:04.082] Server  LOG     {}
+[00:02:04.732] Browser LOG     res {"data":[],"error":null}
+[00:03:30.518] Server  LOG      ✓ Compiled in 36ms
+[00:03:30.924] Server  LOG     {}
+[00:03:53.874] Server  LOG      ✓ Compiled in 76ms
+[00:03:54.248] Server  LOG     {}
+[00:03:54.921] Browser LOG     res {"data":[],"error":null}
+[00:04:04.060] Browser LOG     res {"data":[],"error":null}
+[00:04:05.430] Browser LOG     res {"data":[],"error":null}
+[00:06:08.473] Server  LOG      ✓ Compiled in 47ms
+[00:06:08.821] Server  LOG     {}
+[00:06:08.883] Server  WARN    Error: Route "/dashboard/clients" used `headers().get`. `headers()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:06:08.887] Server  ERROR    ⨯ TypeError: headersList.get is not a function
+[00:06:09.005] Server  WARN    Error: Route "/dashboard/clients" used `headers().get`. `headers()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:06:09.008] Server  ERROR    ⨯ TypeError: headersList.get is not a function
+[00:06:09.292] Browser ERROR   uncaughtError: TypeError: headersList.get is not a function
+[00:06:22.124] Server  LOG      ✓ Compiled in 28ms
+[00:06:22.491] Server  LOG     {}
+[00:06:23.269] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/dashboard..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Documents...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+-                         className="dark"
+-                         style={{color-scheme:"dark"}}
+                        >
+                          ...
+                            <Primitive.button.Slot type="button" id="radix-_R_3..." aria-haspopup="menu" ...>
+                              <Primitive.button.SlotClone type="button" id="radix-_R_3..." aria-haspopup="menu" ...>
+                                <SidebarMenuButton data-testid="user-nav-b..." className="data-[stat..." type="button" ...>
+                                  <button
+                                    data-slot="dropdown-menu-trigger"
+                                    data-sidebar="menu-button"
+                                    data-size="default"
+                                    data-active={false}
+                                    className={"peer/menu-button flex w-full items-center gap-2 overflow-hidden round..."}
+                                    data-testid="user-nav-button"
+                                    type="button"
++                                   id="radix-_R_3pitplb_"
+-                                   id="radix-_R_f6itplb_"
+                                    aria-haspopup="menu"
+                                    aria-expanded={false}
+                                    aria-controls={undefined}
+                                    data-state="closed"
+                                    data-disabled={undefined}
+                                    disabled={false}
+                                    onPointerDown={function handleEvent}
+                                    onKeyDown={function handleEvent}
+                                    ref={function}
+                                  >
+                  ...
+
+[00:06:36.953] Server  LOG      ✓ Compiled in 22ms
+[00:06:37.340] Server  LOG     {}
+[00:06:37.383] Server  LOG     
+[00:06:37.491] Server  LOG     
+[00:06:40.949] Server  LOG      ✓ Compiled in 20ms
+[00:06:41.115] Server  LOG     {}
+[00:06:41.157] Server  LOG     {}
+[00:06:41.295] Server  LOG     {}
+[00:06:43.705] Server  LOG      ✓ Compiled in 26ms
+[00:06:43.876] Server  LOG     {}
+[00:06:43.913] Server  LOG     {}
+[00:06:44.033] Server  LOG     {}
+[00:06:53.014] Server  LOG      ✓ Compiled in 16ms
+[00:06:53.329] Server  LOG     {}
+[00:06:53.596] Server  ERROR    ⨯ TypeError: Cannot read private member #headersList from an object whose class did not declare it
+[00:06:53.822] Server  ERROR    ⨯ TypeError: Cannot read private member #headersList from an object whose class did not declare it
+[00:06:53.947] Browser ERROR   uncaughtError: TypeError: Cannot read private member #headersList from an object whose class did not declare it
+[00:07:21.768] Server  LOG      ✓ Compiled in 22ms
+[00:07:22.239] Server  LOG     {}
+[00:07:23.293] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -126,12 +213,10 @@ It can also happen if the client has a browser extension installed which messes 
                         >
                   ...
 
-[00:06:40.443] Browser LOG     {"accountId":"VA6kOg1J-eV4PnXXUBdDL","accountName":"haako"}
-[00:06:40.526] Server  LOG     {}
-[00:06:40.527] Server  LOG     {}
-[00:07:10.017] Server  ERROR   API Route Error: TypeError: Response constructor: Invalid response status code 204
-[00:07:10.120] Browser ERROR   API Request Failed: {}
-[00:07:14.907] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:07:59.644] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'id')
+[00:08:07.214] Server  LOG      ✓ Compiled in 21ms
+[00:08:07.603] Server  LOG     {}
+[00:08:08.291] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -168,10 +253,10 @@ It can also happen if the client has a browser extension installed which messes 
                         >
                   ...
 
-[00:09:19.222] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:09:19.222] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:09:46.862] Server  LOG     {}
-[00:09:54.413] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:08:09.292] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'id')
+[00:08:16.674] Server  LOG      ✓ Compiled in 22ms
+[00:08:17.054] Server  LOG     {}
+[00:08:18.294] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -208,8 +293,366 @@ It can also happen if the client has a browser extension installed which messes 
                         >
                   ...
 
-[00:10:21.622] Server  LOG      ✓ Compiled in 39ms
-[00:10:24.157] Server  LOG      ✓ Compiled in 27ms
-[00:10:38.601] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:10:38.601] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:10:55.493] Server  LOG     {}
+[00:08:18.294] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'id')
+[00:08:53.153] Server  LOG      ✓ Compiled in 48ms
+[00:08:54.418] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/dashboard..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Documents...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+-                         className="dark"
+-                         style={{color-scheme:"dark"}}
+                        >
+                  ...
+
+[00:08:55.292] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'id')
+[00:09:08.627] Server  LOG      ✓ Compiled in 22ms
+[00:09:10.295] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/dashboard..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Documents...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+-                         className="dark"
+-                         style={{color-scheme:"dark"}}
+                        >
+                  ...
+
+[00:09:10.295] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'id')
+[00:10:20.194] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:10:20.232] Server  LOG      ✓ Compiled in 43ms
+[00:10:22.294] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/dashboard..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Documents...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+-                         className="dark"
+-                         style={{color-scheme:"dark"}}
+                        >
+                  ...
+
+[00:10:22.294] Browser LOG     {}
+[00:10:22.294] Browser LOG     [2;38;2;124;124;124m%s[0m {}
+[00:10:22.294] Browser LOG     {}
+[00:10:22.294] Browser LOG     [2;38;2;124;124;124m%s[0m {}
+[00:10:22.294] Browser LOG     {}
+[00:10:22.294] Browser LOG     [2;38;2;124;124;124m%s[0m {}
+[00:10:22.294] Browser LOG     {"clients":[]}
+[00:10:22.294] Browser LOG     {"clients":[]}
+[00:10:22.294] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'id')
+[00:10:33.642] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/dashboard..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Documents...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+-                         className="dark"
+-                         style={{color-scheme:"dark"}}
+                        >
+                  ...
+
+[00:11:56.072] Browser LOG     {"clients":[]}
+[00:11:56.072] Browser LOG     {"clients":[]}
+[00:11:56.072] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'id')
+[00:12:16.251] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:12:16.270] Server  LOG      ✓ Compiled in 27ms
+[00:12:17.435] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/dashboard..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Documents...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+-                         className="dark"
+-                         style={{color-scheme:"dark"}}
+                        >
+                  ...
+
+[00:12:17.690] Browser LOG     {}
+[00:12:17.690] Browser LOG     [2;38;2;124;124;124m%s[0m {}
+[00:12:17.690] Browser LOG     {}
+[00:12:17.690] Browser LOG     [2;38;2;124;124;124m%s[0m {}
+[00:12:17.690] Browser LOG     {}
+[00:12:17.690] Browser LOG     [2;38;2;124;124;124m%s[0m {}
+[00:12:17.938] Browser LOG     {"clients":[]}
+[00:12:17.938] Browser LOG     [2;38;2;124;124;124m%s[0m {"clients":[]}
+[00:12:22.499] Server  LOG      ✓ Compiled in 26ms
+[00:12:23.292] Browser LOG     {"clients":[]}
+[00:12:23.292] Browser LOG     [2;38;2;124;124;124m%s[0m {"clients":[]}
+[00:12:23.292] Browser LOG     {"clients":[]}
+[00:12:23.292] Browser LOG     [2;38;2;124;124;124m%s[0m {"clients":[]}
+[00:12:29.752] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'id')
+[00:12:47.787] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:12:47.812] Server  LOG      ✓ Compiled in 34ms
+[00:12:49.048] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/dashboard..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Documents...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+-                         className="dark"
+-                         style={{color-scheme:"dark"}}
+                        >
+                  ...
+
+[00:12:52.399] Browser LOG     res {"data":[],"error":null}
+[00:13:06.177] Browser LOG     res {"data":[],"error":null}
+[00:13:31.407] Server  LOG      ✓ Compiled in 38ms
+[00:13:32.408] Browser LOG     res {"data":[],"error":null}
+[00:16:16.795] Server  LOG      ✓ Compiled in 165ms
+[00:16:33.842] Server  LOG      ✓ Compiled in 30ms
+[00:16:42.739] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <MenuProvider scope={{Menu:[...], ...}} open={false} onOpenChange={function useCallbackRef.useMemo} content={null} ...>
+      <MenuProvider scope={{Menu:[...], ...}} onClose={function Menu.useCallback} isUsingKeyboardRef={{current:false}} ...>
+        <DropdownMenuTrigger asChild={true}>
+          <DropdownMenuTrigger data-slot="dropdown-m..." asChild={true}>
+            <MenuAnchor asChild={true} __scopeMenu={{Menu:[...], ...}}>
+              <PopperAnchor __scopePopper={{Menu:[...], ...}} asChild={true} ref={null}>
+                <Primitive.div asChild={true} ref={function}>
+                  <Primitive.div.Slot ref={function}>
+                    <Primitive.div.SlotClone ref={function}>
+                      <Primitive.button type="button" id="radix-_R_3..." aria-haspopup="menu" aria-expanded={false} ...>
+                        <Primitive.button.Slot type="button" id="radix-_R_3..." aria-haspopup="menu" ...>
+                          <Primitive.button.SlotClone type="button" id="radix-_R_3..." aria-haspopup="menu" ...>
+                            <SidebarMenuButton data-testid="user-nav-b..." className="data-[stat..." type="button" ...>
+                              <button
+                                data-slot="dropdown-menu-trigger"
+                                data-sidebar="menu-button"
+                                data-size="default"
+                                data-active={false}
+                                className={"peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-m..."}
+                                data-testid="user-nav-button"
+                                type="button"
++                               id="radix-_R_3pitplb_"
+-                               id="radix-_R_f6itplb_"
+                                aria-haspopup="menu"
+                                aria-expanded={false}
+                                aria-controls={undefined}
+                                data-state="closed"
+                                data-disabled={undefined}
+                                disabled={false}
+                                onPointerDown={function handleEvent}
+                                onKeyDown={function handleEvent}
+                                ref={function}
+                              >
+        ...
+
+[00:16:43.031] Browser ERROR   React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
+
+   Previous render            Next render
+   ------------------------------------------------------
+%s   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ SettingsForm 1. useContext                 useContext
+2. useContext                 useContext
+3. useContext                 useContext
+4. useEffect                  useEffect
+5. useState                   useState
+6. useCallback                useCallback
+7. useSyncExternalStore       useSyncExternalStore
+8. useEffect                  useEffect
+9. undefined                  useContext
+
+[00:16:43.031] Browser ERROR   uncaughtError: Error: Rendered more hooks than during the previous render.
+[00:17:17.602] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:17:17.631] Server  LOG      ✓ Compiled in 32ms
+[00:17:35.899] Server  LOG      ✓ Compiled in 49ms
+[00:17:48.104] Server  LOG      ✓ Compiled in 21ms
+[00:17:54.749] Server  LOG      ✓ Compiled in 29ms
+[00:19:49.083] Server  LOG      ✓ Compiled in 43ms
+[00:19:49.293] Browser LOG     {"address":"2 rue des trésoriers de France","companyName":"Mon auto-entreprise","createdAt":"2025-12-14T15:50:33.218Z","email":"sethylunelo@gmail.com","id":"8D1SKZ_TIzxuoYbdk4uRJ","legalMentions":"","logoUrl":"https://sethylaleye.com/assets/head.png","siret":"97897829299293","updatedAt":"2025-12-14T15:50:33.218Z","userId":"pJ9Q5NEL9FQUf5MbkxX0ANbxPe18PfyF"}
+[00:19:49.293] Browser LOG     [2;38;2;124;124;124m%s[0m {"address":"2 rue des trésoriers de France","companyName":"Mon auto-entreprise","createdAt":"2025-12-14T15:50:33.218Z","email":"sethylunelo@gmail.com","id":"8D1SKZ_TIzxuoYbdk4uRJ","legalMentions":"","logoUrl":"https://sethylaleye.com/assets/head.png","siret":"97897829299293","updatedAt":"2025-12-14T15:50:33.218Z","userId":"pJ9Q5NEL9FQUf5MbkxX0ANbxPe18PfyF"}
+[00:19:49.293] Browser LOG     {"address":"2 rue des trésoriers de France","companyName":"Mon auto-entreprise","createdAt":"2025-12-14T15:50:33.218Z","email":"sethylunelo@gmail.com","id":"8D1SKZ_TIzxuoYbdk4uRJ","legalMentions":"","logoUrl":"https://sethylaleye.com/assets/head.png","siret":"97897829299293","updatedAt":"2025-12-14T15:50:33.218Z","userId":"pJ9Q5NEL9FQUf5MbkxX0ANbxPe18PfyF"}
+[00:19:49.293] Browser LOG     [2;38;2;124;124;124m%s[0m {"address":"2 rue des trésoriers de France","companyName":"Mon auto-entreprise","createdAt":"2025-12-14T15:50:33.218Z","email":"sethylunelo@gmail.com","id":"8D1SKZ_TIzxuoYbdk4uRJ","legalMentions":"","logoUrl":"https://sethylaleye.com/assets/head.png","siret":"97897829299293","updatedAt":"2025-12-14T15:50:33.218Z","userId":"pJ9Q5NEL9FQUf5MbkxX0ANbxPe18PfyF"}
+[00:20:17.087] Server  LOG      ✓ Compiled in 30ms
+[00:20:17.291] Browser LOG     {"address":"2 rue des trésoriers de France","companyName":"Mon auto-entreprise","createdAt":"2025-12-14T15:50:33.218Z","email":"sethylunelo@gmail.com","id":"8D1SKZ_TIzxuoYbdk4uRJ","legalMentions":"","logoUrl":"https://sethylaleye.com/assets/head.png","siret":"97897829299293","updatedAt":"2025-12-14T15:50:33.218Z","userId":"pJ9Q5NEL9FQUf5MbkxX0ANbxPe18PfyF"}
+[00:20:17.291] Browser LOG     [2;38;2;124;124;124m%s[0m {"address":"2 rue des trésoriers de France","companyName":"Mon auto-entreprise","createdAt":"2025-12-14T15:50:33.218Z","email":"sethylunelo@gmail.com","id":"8D1SKZ_TIzxuoYbdk4uRJ","legalMentions":"","logoUrl":"https://sethylaleye.com/assets/head.png","siret":"97897829299293","updatedAt":"2025-12-14T15:50:33.218Z","userId":"pJ9Q5NEL9FQUf5MbkxX0ANbxPe18PfyF"}
+[00:20:17.291] Browser LOG     {"address":"2 rue des trésoriers de France","companyName":"Mon auto-entreprise","createdAt":"2025-12-14T15:50:33.218Z","email":"sethylunelo@gmail.com","id":"8D1SKZ_TIzxuoYbdk4uRJ","legalMentions":"","logoUrl":"https://sethylaleye.com/assets/head.png","siret":"97897829299293","updatedAt":"2025-12-14T15:50:33.218Z","userId":"pJ9Q5NEL9FQUf5MbkxX0ANbxPe18PfyF"}
+[00:20:17.291] Browser LOG     [2;38;2;124;124;124m%s[0m {"address":"2 rue des trésoriers de France","companyName":"Mon auto-entreprise","createdAt":"2025-12-14T15:50:33.218Z","email":"sethylunelo@gmail.com","id":"8D1SKZ_TIzxuoYbdk4uRJ","legalMentions":"","logoUrl":"https://sethylaleye.com/assets/head.png","siret":"97897829299293","updatedAt":"2025-12-14T15:50:33.218Z","userId":"pJ9Q5NEL9FQUf5MbkxX0ANbxPe18PfyF"}
+[00:20:20.371] Server  LOG     undefined
+[00:20:21.311] Browser LOG     undefined
+[00:20:21.311] Browser LOG     [2;38;2;124;124;124m%s[0m undefined
+[00:20:21.311] Browser LOG     undefined
+[00:20:21.311] Browser LOG     [2;38;2;124;124;124m%s[0m undefined
+[00:20:21.535] Browser LOG     {"address":"2 rue des trésoriers de France","companyName":"Mon auto-entreprise","createdAt":"2025-12-14T15:50:33.218Z","email":"sethylunelo@gmail.com","id":"8D1SKZ_TIzxuoYbdk4uRJ","legalMentions":"","logoUrl":"https://sethylaleye.com/assets/head.png","siret":"97897829299293","updatedAt":"2025-12-14T15:50:33.218Z","userId":"pJ9Q5NEL9FQUf5MbkxX0ANbxPe18PfyF"}
+[00:20:21.536] Browser LOG     [2;38;2;124;124;124m%s[0m {"address":"2 rue des trésoriers de France","companyName":"Mon auto-entreprise","createdAt":"2025-12-14T15:50:33.218Z","email":"sethylunelo@gmail.com","id":"8D1SKZ_TIzxuoYbdk4uRJ","legalMentions":"","logoUrl":"https://sethylaleye.com/assets/head.png","siret":"97897829299293","updatedAt":"2025-12-14T15:50:33.218Z","userId":"pJ9Q5NEL9FQUf5MbkxX0ANbxPe18PfyF"}
+[00:20:26.124] Server  LOG      ✓ Compiled in 37ms
+[00:21:13.510] Server  LOG      ✓ Compiled in 38ms
+[00:21:18.528] Server  LOG      ✓ Compiled in 25ms
+[00:22:53.953] Server  LOG      ✓ Compiled in 43ms
+[00:23:19.378] Server  LOG      ✓ Compiled in 33ms
+[00:23:35.855] Server  LOG      ✓ Compiled in 24ms
+[00:24:09.330] Server  LOG      ✓ Compiled in 25ms
+[00:25:15.212] Server  LOG      ✓ Compiled in 35ms
+[00:27:22.457] Server  LOG      ✓ Compiled in 65ms
+[00:27:38.653] Server  LOG      ✓ Compiled in 28ms
+[00:28:22.242] Server  LOG      ✓ Compiled in 60ms
+[00:30:04.996] Server  LOG      ✓ Compiled in 80ms

@@ -1531,6 +1531,10 @@
     background-color: var(--sidebar);
   }
 
+  .bg-sidebar-accent {
+    background-color: var(--sidebar-accent);
+  }
+
   .bg-sidebar-border {
     background-color: var(--sidebar-border);
   }
@@ -1891,6 +1895,10 @@
 
   .text-secondary-foreground {
     color: var(--secondary-foreground);
+  }
+
+  .text-sidebar-accent-foreground {
+    color: var(--sidebar-accent-foreground);
   }
 
   .text-sidebar-foreground {

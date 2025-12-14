@@ -545,7 +545,7 @@ __turbopack_context__.s([
 ]);
 function successResponse(data, status = 200) {
     if (status === 204) {
-        return Response.json(null, {
+        return new Response(null, {
             status
         });
     }

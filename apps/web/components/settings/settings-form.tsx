@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { settingsSchema, type SettingsSchema } from '@/lib/validators/settings';
@@ -15,20 +16,19 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useSaveSettings } from '@/hooks/use-settings';
+import { useSaveSettings, useSettings } from '@/hooks/use-settings';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 
-interface SettingsFormProps {
-    initialData?: SettingsSchema | null;
-}
 
-export function SettingsForm({ initialData }: SettingsFormProps) {
+export function SettingsForm() {
+    const { data: settings, isLoading, error } = useSettings();
+
     const saveMutation = useSaveSettings();
 
     const form = useForm<SettingsSchema>({
         resolver: zodResolver(settingsSchema),
-        defaultValues: initialData || {
+        defaultValues: {
             companyName: '',
             siret: '',
             address: '',
@@ -37,6 +37,20 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
             legalMentions: '',
         },
     });
+
+    // Reset form with fetched settings when data becomes available
+    useEffect(() => {
+        if (settings) {
+            form.reset({
+                companyName: settings.companyName ?? '',
+                siret: settings.siret ?? '',
+                address: settings.address ?? '',
+                email: settings.email ?? '',
+                logoUrl: settings.logoUrl ?? '',
+                legalMentions: settings.legalMentions ?? '',
+            });
+        }
+    }, [settings, form]);
 
     const onSubmit = async (data: SettingsSchema) => {
         toast.promise(
@@ -48,6 +62,8 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
             }
         );
     };
+    if (isLoading) return <div>Chargement...</div>;
+    if (error) return <div>Erreur lors du chargement des paramètres</div>;
 
     return (
         <Card className="w-full max-w-2xl mx-auto">
@@ -64,7 +80,7 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
                                 <FormItem>
                                     <FormLabel>Nom de l'entreprise</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Ma Micro-Entreprise" {...field} value={field.value || ''} />
+                                        <Input placeholder="Ma Micro-Entreprise" {...field} value={field.value ?? ''} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -78,7 +94,7 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
                                 <FormItem>
                                     <FormLabel>SIRET</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="123 456 789 00012" {...field} value={field.value || ''} />
+                                        <Input placeholder="123 456 789 00012" {...field} value={field.value ?? ''} />
                                     </FormControl>
                                     <FormDescription>
                                         Numéro SIRET à 14 chiffres
@@ -95,7 +111,7 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
                                 <FormItem>
                                     <FormLabel>Adresse</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="123 Rue de la République, 75001 Paris" {...field} value={field.value || ''} />
+                                        <Input placeholder="123 Rue de la République, 75001 Paris" {...field} value={field.value ?? ''} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -109,7 +125,7 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input type="email" placeholder="contact@entreprise.fr" {...field} value={field.value || ''} />
+                                        <Input type="email" placeholder="contact@entreprise.fr" {...field} value={field.value ?? ''} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -123,7 +139,7 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
                                 <FormItem>
                                     <FormLabel>URL du Logo</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="https://..." {...field} value={field.value || ''} />
+                                        <Input placeholder="https://..." {...field} value={field.value ?? ''} />
                                     </FormControl>
                                     <FormDescription>
                                         URL publique de votre logo
@@ -140,7 +156,7 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
                                 <FormItem>
                                     <FormLabel>Mentions légales</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Mentions légales par défaut" {...field} value={field.value || ''} />
+                                        <Input placeholder="Mentions légales par défaut" {...field} value={field.value ?? ''} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

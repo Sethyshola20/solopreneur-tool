@@ -6,7 +6,6 @@ import * as authSchema from "./auth-schema";
 
 const DATABASE_URL = isLocal ? process.env.DATABASE_URL_DEV! : process.env.DATABASE_URL!;
 if (!DATABASE_URL) throw new Error("Missing DATABASE_URL environment variable");
-
 const cleanDatabaseUrl = DATABASE_URL.split('?')[0];
 
 const sql = neon(cleanDatabaseUrl);

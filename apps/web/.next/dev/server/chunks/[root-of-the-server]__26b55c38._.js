@@ -451,6 +451,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopre
 ;
 const DATABASE_URL = __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$apps$2f$web$2f$const$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["isLocal"] ? process.env.DATABASE_URL_DEV : process.env.DATABASE_URL;
 if (!DATABASE_URL) throw new Error("Missing DATABASE_URL environment variable");
+console.log({
+    isLocal: __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$apps$2f$web$2f$const$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["isLocal"],
+    DATABASE_URL
+});
 const cleanDatabaseUrl = DATABASE_URL.split('?')[0];
 const sql = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$node_modules$2f40$neondatabase$2f$serverless$2f$index$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__["neon"])(cleanDatabaseUrl);
 const db = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Code$2f$solopreneur$2d$tool$2f$node_modules$2f$drizzle$2d$orm$2f$neon$2d$http$2f$driver$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["drizzle"])(sql, {
@@ -515,7 +519,7 @@ __turbopack_context__.s([
 ]);
 function successResponse(data, status = 200) {
     if (status === 204) {
-        return Response.json(null, {
+        return new Response(null, {
             status
         });
     }
