@@ -79,7 +79,7 @@ export function FactureForm({ onOpenChange, initialData, factureId }: FactureFor
 
     useEffect(() => {
         form.reset(initalFormData || {
-            clientId: clients?.[0].id,
+            clientId: clients?.[0]?.id,
             devisId: "",
             date: new Date().toISOString().split("T")[0],
             dueDate: "",

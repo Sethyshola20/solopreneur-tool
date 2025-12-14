@@ -77,7 +77,7 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
 
     useEffect(() => {
         form.reset(initalFormData || {
-            clientId: clients?.[0].id,
+            clientId: clients?.[0]?.id,
             date: new Date().toISOString().split("T")[0],
             validUntil: "",
             status: 'draft' as 'draft' | 'sent' | 'accepted' | 'rejected',
