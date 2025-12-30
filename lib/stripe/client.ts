@@ -28,7 +28,7 @@ export async function getStripeClient(accountId: string): Promise<Stripe> {
     // Decrypt API key and create client
     const apiKey = decrypt(account.apiKey);
     const client = new Stripe(apiKey, {
-        apiVersion: '2025-11-17.clover',
+        apiVersion: '2025-12-15.clover',
     });
 
     // Cache the client
