@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { Document, Page, Text, View } from '@react-pdf/renderer';
-import { styles, formatCurrency, formatDate, formatShortDate } from '../styles';
-import { DevisPDFData, DEVIS_STATUS_LABELS, DEVIS_STATUS_COLORS } from '../types';
+import { styles, formatCurrency, formatDate } from '../styles';
+import { DevisPDFData } from '../types';
 
 interface DevisDocumentProps {
     data: DevisPDFData;
