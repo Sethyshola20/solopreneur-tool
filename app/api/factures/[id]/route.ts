@@ -1,5 +1,5 @@
 import { db } from "@/lib/db/drizzle";
-import { factures, facturesItems } from "@/lib/db/schema";
+import { factures, facturesItems, recettes } from "@/lib/db/schema";
 import { factureSchema } from "@/lib/validators/factures";
 import { runWithAuthAPI } from "@/lib/api/run-with-auth";
 import { successResponse, errorResponse } from "@/lib/api/response";
@@ -32,6 +32,13 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
 
         const body = await req.json();
         const validatedData = factureSchema.parse(body);
+
+        // Get the original facture to check status change
+        const [originalFacture] = await db.select().from(factures).where(and(eq(factures.id, id), eq(factures.userId, user.id)));
+
+        if (!originalFacture) {
+            return errorResponse("Facture not found or unauthorized", 404);
+        }
 
         // Calculate totals
         let total = 0;
@@ -91,6 +98,45 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
                 await db.insert(facturesItems).values(originalItems);
             }
             throw itemsError;
+        }
+
+        // Handle recette creation/deletion based on status change
+        const statusChanged = originalFacture.status !== validatedData.status;
+
+        if (statusChanged) {
+            // If changing TO 'paid', create a recette
+            if (validatedData.status === 'paid') {
+                // Check if recette already exists for this facture
+                const existingRecette = await db.query.recettes.findFirst({
+                    where: eq(recettes.factureId, id),
+                });
+
+                if (!existingRecette) {
+                    await db.insert(recettes).values({
+                        id: nanoid(),
+                        userId: user.id,
+                        factureId: id,
+                        clientId: validatedData.clientId,
+                        amount: total.toString(),
+                        date: validatedData.date,
+                        paymentMethod: null,
+                    });
+                }
+            }
+            // If changing FROM 'paid' to something else, delete the recette
+            else if (originalFacture.status === 'paid') {
+                await db.delete(recettes).where(eq(recettes.factureId, id));
+            }
+        }
+        // If status stays 'paid' but amount changed, update the recette
+        else if (validatedData.status === 'paid' && originalFacture.total !== total.toString()) {
+            await db.update(recettes)
+                .set({
+                    amount: total.toString(),
+                    date: validatedData.date,
+                    clientId: validatedData.clientId,
+                })
+                .where(eq(recettes.factureId, id));
         }
 
         return successResponse(updated);

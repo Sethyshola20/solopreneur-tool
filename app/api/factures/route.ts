@@ -1,5 +1,5 @@
 import { db } from "@/lib/db/drizzle";
-import { clients, factures, facturesItems } from "@/lib/db/schema";
+import { clients, factures, facturesItems, recettes } from "@/lib/db/schema";
 import { factureSchema } from "@/lib/validators/factures";
 import { eq, desc, sql } from "drizzle-orm";
 import { nanoid } from "nanoid";
@@ -94,6 +94,26 @@ export async function POST(req: Request) {
                 // Rollback: delete the facture if items insertion fails
                 await db.delete(factures).where(eq(factures.id, factureId));
                 throw itemsError;
+            }
+        }
+
+        // If facture is marked as 'paid', automatically create a recette
+        if (validatedData.status === 'paid') {
+            try {
+                await db.insert(recettes).values({
+                    id: nanoid(),
+                    userId: user.id,
+                    factureId: createdFacture.id,
+                    clientId: validatedData.clientId,
+                    amount: total.toString(),
+                    date: validatedData.date,
+                    paymentMethod: null, // Can be updated manually later
+                });
+            } catch (recetteError) {
+                // Rollback: delete items and facture if recette creation fails
+                await db.delete(facturesItems).where(eq(facturesItems.factureId, factureId));
+                await db.delete(factures).where(eq(factures.id, factureId));
+                throw recetteError;
             }
         }
 

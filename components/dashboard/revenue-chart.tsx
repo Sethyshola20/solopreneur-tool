@@ -93,6 +93,7 @@ export function RevenueChart({ recettes, stripeStats }: RevenueChartProps) {
     // Calculate max revenue after aggregation for scaling the bars
     const maxRevenue = Math.max(...monthlyData.map(m => m.total), 1000); // Ensure min height for scaling
 
+    console.log(maxRevenue);
     return (
         <Card className="col-span-4 md:col-span-7"> {/* Increased span for better visibility */}
             <CardHeader>
@@ -106,8 +107,8 @@ export function RevenueChart({ recettes, stripeStats }: RevenueChartProps) {
                             <div
                                 className="w-full bg-primary rounded-t relative transition-all duration-300"
                                 style={{
-                                    height: `${(data.total / maxRevenue) * 100}%`,
-                                    minHeight: data.total > 0 ? '4px' : '0px'
+                                    height: `${Math.max((data.total / maxRevenue) * 100, data.total > 0 ? 10 : 0)}%`,
+                                    minHeight: data.total > 0 ? '100px' : '0px'
                                 }}
                             >
                                 {/* Display Value */}

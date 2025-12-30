@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, Settings, FileText, BarChart3, Receipt, CreditCard } from "lucide-react"
+import { LayoutDashboard, Users, Settings, FileText, BarChart3, Receipt, CreditCard, Calculator } from "lucide-react"
 import {
     Sidebar,
     SidebarContent,
@@ -41,6 +41,12 @@ const menuItems = [
         url: "/dashboard/factures",
         icon: Receipt,
     },
+    {
+        title: "Impots",
+        url: "/dashboard/impots",
+        icon: Calculator,
+    },
+
     {
         title: "Livres Recettes",
         url: "/dashboard/recettes",
