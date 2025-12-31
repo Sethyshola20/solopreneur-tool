@@ -13,13 +13,13 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { useCreateDevis, useUpdateDevis } from '@/hooks/use-devis';
 import { useClients } from '@/hooks/use-clients';
-import { Trash2, Plus, Loader2 } from 'lucide-react';
+import { Trash2, Plus, Loader2, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'sonner';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { DevisWithItems } from '@/lib/use-cases/devis';
 import { DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
@@ -36,7 +36,8 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
     const createMutation = useCreateDevis();
     const updateMutation = useUpdateDevis(devisId || '');
 
-    const { data: clients } = useClients()
+    const { data: clients } = useClients();
+    const [showConditions, setShowConditions] = useState(false);
 
     const initalFormData = initialData
         ? {
@@ -48,7 +49,11 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                 ...item,
                 quantity: Number(item.quantity),
                 price: Number(item.price),
-            }))
+            })),
+            deliveryTimeWeeks: initialData.deliveryTimeWeeks ?? null,
+            deliverables: initialData.deliverables ?? null,
+            revisionCycles: initialData.revisionCycles ?? null,
+            exclusions: initialData.exclusions ?? null,
         }
         : undefined;
 
@@ -66,6 +71,10 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                     price: 1,
                 }
             ],
+            deliveryTimeWeeks: null,
+            deliverables: null,
+            revisionCycles: null,
+            exclusions: null,
         },
     });
 
@@ -88,10 +97,17 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                 }
             ],
         },);
-    }, [initialData, form]);
+    }, [initialData, clients]);
 
+    // Show conditions section if any field has a value
+    useEffect(() => {
+        if (initialData && (initialData.deliveryTimeWeeks || initialData.deliverables || initialData.revisionCycles || initialData.exclusions)) {
+            setShowConditions(true);
+        }
+    }, [initialData]);
 
     const onSubmit = async (data: DevisSchema) => {
+        console.log('Submit data:', data);
         const mutation = devisId ? updateMutation : createMutation;
 
         toast.promise(
@@ -289,7 +305,105 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                             ))}
                         </div>
 
-                        <div className="flex justify-end pt-4 ">
+                        {/* Conditions générales - Collapsible section */}
+                        <div className="pt-4 border-t">
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="gap-2 mb-3"
+                                onClick={() => setShowConditions(!showConditions)}
+                            >
+                                {showConditions ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                                Conditions générales (optionnel)
+                            </Button>
+
+                            {showConditions && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 p-4 bg-muted/30 rounded-md">
+                                    <FormField
+                                        control={form.control}
+                                        name="deliveryTimeWeeks"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Délai de réalisation (semaines)</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type="number"
+                                                        placeholder="Ex: 4"
+                                                        {...field}
+                                                        value={field.value ?? ''}
+                                                        onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : null)}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="revisionCycles"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Cycles de révisions inclus</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type="number"
+                                                        placeholder="Ex: 2"
+                                                        {...field}
+                                                        value={field.value ?? ''}
+                                                        onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : null)}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="deliverables"
+                                        render={({ field }) => (
+                                            <FormItem className="md:col-span-2">
+                                                <FormLabel>Livrables</FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        placeholder="Ex: Code source, documentation technique, accès repository Git"
+                                                        {...field}
+                                                        value={field.value ?? ''}
+                                                        onChange={(e) => field.onChange(e.target.value || null)}
+                                                        rows={2}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="exclusions"
+                                        render={({ field }) => (
+                                            <FormItem className="md:col-span-2">
+                                                <FormLabel>Exclusions</FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        placeholder="Ex: Hébergement, maintenance post-livraison, formations, évolutions futures"
+                                                        {...field}
+                                                        value={field.value ?? ''}
+                                                        onChange={(e) => field.onChange(e.target.value || null)}
+                                                        rows={2}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="flex justify-end pt-4">
                             <div className="text-right">
                                 <span className="text-muted-foreground mr-4">Total:</span>
                                 <span className="text-2xl font-bold">{total.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</span>

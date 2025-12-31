@@ -19,6 +19,10 @@ export async function GET(req: Request) {
             date: devis.date,
             validUntil: devis.validUntil,
             total: devis.total,
+            deliveryTimeWeeks: devis.deliveryTimeWeeks,
+            deliverables: devis.deliverables,
+            revisionCycles: devis.revisionCycles,
+            exclusions: devis.exclusions,
 
             createdAt: devis.createdAt,
             updatedAt: devis.updatedAt,
@@ -68,6 +72,10 @@ export async function POST(req: Request) {
             date: validatedData.date,
             validUntil: validatedData.validUntil || null,
             total: total.toString(),
+            deliveryTimeWeeks: validatedData.deliveryTimeWeeks ?? null,
+            deliverables: validatedData.deliverables ?? null,
+            revisionCycles: validatedData.revisionCycles ?? null,
+            exclusions: validatedData.exclusions ?? null,
         }).returning();
 
         // Create the items

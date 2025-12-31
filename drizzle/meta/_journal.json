@@ -57,6 +57,13 @@
       "when": 1764429412911,
       "tag": "0007_reflective_doctor_spectrum",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1767177232821,
+      "tag": "0008_wandering_talisman",
+      "breakpoints": true
     }
   ]
 }

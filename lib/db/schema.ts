@@ -26,6 +26,13 @@ export const devis = pgTable('devis', {
     date: date('date').notNull(),
     validUntil: date('valid_until'),
     total: decimal('total', { precision: 10, scale: 2 }).notNull().default('0'),
+
+    // General Conditions
+    deliveryTimeWeeks: integer('delivery_time_weeks'),
+    deliverables: text('deliverables'),
+    revisionCycles: integer('revision_cycles'),
+    exclusions: text('exclusions'),
+
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });

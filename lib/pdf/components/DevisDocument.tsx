@@ -118,6 +118,32 @@ export const DevisDocument: React.FC<DevisDocumentProps> = ({ data }) => {
                     </Text>
                 </View>
 
+                {/* General Conditions */}
+                {(data.deliveryTimeWeeks || data.deliverables || data.revisionCycles || data.exclusions) && (
+                    <View style={styles.paymentSection}>
+                        <Text style={styles.paymentTitle}>Conditions générales</Text>
+                        {data.deliveryTimeWeeks && (
+                            <Text style={styles.paymentText}>
+                                • Délai de réalisation : {data.deliveryTimeWeeks} {data.deliveryTimeWeeks === 1 ? 'semaine' : 'semaines'} à partir de la signature
+                            </Text>
+                        )}
+                        {data.deliverables && (
+                            <Text style={styles.paymentText}>
+                                • Livrables : {data.deliverables}
+                            </Text>
+                        )}
+                        {data.revisionCycles && (
+                            <Text style={styles.paymentText}>
+                                • Cycles de révisions inclus : {data.revisionCycles} {data.revisionCycles === 1 ? 'cycle' : 'cycles'} de corrections
+                            </Text>
+                        )}
+                        {data.exclusions && (
+                            <Text style={styles.paymentText}>
+                                • Exclusions : {data.exclusions}
+                            </Text>
+                        )}
+                    </View>
+                )}
 
                 {/* Legal Mentions */}
                 {company.legalMentions && (

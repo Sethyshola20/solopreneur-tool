@@ -13,7 +13,15 @@ export const devisSchema = z.object({
     validUntil: z.string().optional().nullable(),
     status: z.enum(['draft', 'sent', 'accepted', 'rejected']).default('draft').nonoptional(),
     items: z.array(devisItemSchema).min(1, 'Au moins un article est requis'),
+
+    // General Conditions (optional)
+    deliveryTimeWeeks: z.number().positive().optional().nullable(),
+    deliverables: z.string().optional().nullable(),
+    revisionCycles: z.number().int().positive().optional().nullable(),
+    exclusions: z.string().optional().nullable(),
 });
+
+
 
 export type DevisItemSchema = z.infer<typeof devisItemSchema>;
 export type DevisSchema = z.infer<typeof devisSchema>;

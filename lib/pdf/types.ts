@@ -41,6 +41,12 @@ export interface DevisPDFData {
     items: LineItem[];
     total: number;
     status: 'draft' | 'sent' | 'accepted' | 'rejected';
+
+    // General Conditions
+    deliveryTimeWeeks?: number | null;
+    deliverables?: string | null;
+    revisionCycles?: number | null;
+    exclusions?: string | null;
 }
 
 export interface FacturePDFData {
