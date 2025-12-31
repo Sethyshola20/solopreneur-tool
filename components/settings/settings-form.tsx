@@ -21,6 +21,7 @@ import { Separator } from '@/components/ui/separator';
 import { Building2, FileText, CreditCard, Loader2, Mail, MapPin, ImageIcon } from 'lucide-react';
 import { useSaveSettings, useSettings } from '@/hooks/use-settings';
 import { settingsSchema, SettingsSchema } from '@/lib/validators/settings';
+import { toast } from 'sonner';
 
 export default function SettingsForm() {
     const { data: settings, isLoading, error } = useSettings();
@@ -60,12 +61,11 @@ export default function SettingsForm() {
     }, [settings, form]);
 
     const onSubmit = async (data: SettingsSchema) => {
-        try {
-            await saveMutation.mutateAsync(data);
-            alert('Paramètres enregistrés avec succès !');
-        } catch (error) {
-            alert('Erreur lors de l\'enregistrement');
-        }
+        toast.promise(saveMutation.mutateAsync(data), {
+            loading: 'Enregistrement en cours...',
+            success: 'Paramètres enregistrés avec succès !',
+            error: 'Erreur lors de l\'enregistrement',
+        });
     };
 
     if (isLoading) {

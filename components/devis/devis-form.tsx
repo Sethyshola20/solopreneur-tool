@@ -296,7 +296,7 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                             </div>
                         </div>
                     </CardContent>
-                    <CardFooter className="flex justify-end gap-2">
+                    <CardFooter className="flex justify-end gap-2 pr-0 pt-6">
                         <Button type="submit" disabled={isPending}>
                             {isPending ? (
                                 <>

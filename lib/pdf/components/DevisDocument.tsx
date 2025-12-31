@@ -107,10 +107,14 @@ export const DevisDocument: React.FC<DevisDocumentProps> = ({ data }) => {
                     </Text>
                 </View>
 
+                {/* Payment Terms (mandatory for B2B in France) */}
                 <View style={styles.paymentSection}>
                     <Text style={styles.paymentTitle}>Conditions de paiement</Text>
                     <Text style={styles.paymentText}>
-                        • {company.paymentTerms || "30% à la commande, 70% à la livraison"}
+                        • Pénalités de retard : {company.latePaymentPenalty + " % du total" || "3 fois le taux d'intérêt légal"}
+                    </Text>
+                    <Text style={styles.paymentText}>
+                        • Indemnité forfaitaire pour frais de recouvrement : {company.recoveryFee + " €" || "40 €"}
                     </Text>
                 </View>
 

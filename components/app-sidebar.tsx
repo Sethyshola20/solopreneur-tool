@@ -11,58 +11,15 @@ import {
     SidebarHeader,
     SidebarFooter,
 } from "@/components/ui/sidebar"
-import Link from "next/link"
 import { auth } from "@/lib/auth/auth";
 import { headers } from "next/headers";
 import { db } from "@/lib/db/drizzle";
 import { settings } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { SidebarUserNav } from "./sidebar-user-nav";
+import MenuItems from "./menu-items";
 
 
-const menuItems = [
-    {
-        title: "Dashboard",
-        url: "/dashboard",
-        icon: LayoutDashboard,
-    },
-    {
-        title: "Clients",
-        url: "/dashboard/clients",
-        icon: Users,
-    },
-    {
-        title: "Devis",
-        url: "/dashboard/devis",
-        icon: CreditCard,
-    },
-    {
-        title: "Factures",
-        url: "/dashboard/factures",
-        icon: Receipt,
-    },
-    {
-        title: "Impots",
-        url: "/dashboard/impots",
-        icon: Calculator,
-    },
-
-    {
-        title: "Livres Recettes",
-        url: "/dashboard/recettes",
-        icon: FileText,
-    },
-    {
-        title: "Stripe",
-        url: "/dashboard/stripe",
-        icon: BarChart3,
-    },
-    {
-        title: "Paramètres",
-        url: "/dashboard/settings",
-        icon: Settings,
-    },
-]
 
 export async function AppSidebar() {
     const session = await auth.api.getSession({
@@ -90,20 +47,7 @@ export async function AppSidebar() {
                 <SidebarGroup>
                     <SidebarGroupLabel>Navigation</SidebarGroupLabel>
                     <SidebarGroupContent>
-                        <SidebarMenu>
-                            {menuItems.map((item) => {
-                                return (
-                                    <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton asChild>
-                                            <Link href={item.url} className={""}>
-                                                <item.icon />
-                                                <span>{item.title}</span>
-                                            </Link>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                )
-                            })}
-                        </SidebarMenu>
+                        <MenuItems />
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>

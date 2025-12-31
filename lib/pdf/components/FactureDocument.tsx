@@ -118,10 +118,10 @@ export const FactureDocument: React.FC<FactureDocumentProps> = ({ data }) => {
                         <Text style={styles.paymentText}>• Date d'échéance : {formatShortDate(dueDate)}</Text>
                     )}
                     <Text style={styles.paymentText}>
-                        • Pénalités de retard : {company.latePaymentPenalty || "3 fois le taux d'intérêt légal"}
+                        • Pénalités de retard : {company.latePaymentPenalty + " % du total" || "3 fois le taux d'intérêt légal"}
                     </Text>
                     <Text style={styles.paymentText}>
-                        • Indemnité forfaitaire pour frais de recouvrement : {company.recoveryFee || "40 €"}
+                        • Indemnité forfaitaire pour frais de recouvrement : {company.recoveryFee + " €" || "40 €"}
                     </Text>
                 </View>
 
