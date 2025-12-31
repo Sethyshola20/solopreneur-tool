@@ -42,11 +42,19 @@ export interface DevisPDFData {
     total: number;
     status: 'draft' | 'sent' | 'accepted' | 'rejected';
 
+    // Project Details
+    projectDescription?: string | null;
+    specificationReference?: string | null;
+
     // General Conditions
     deliveryTimeWeeks?: number | null;
     deliverables?: string | null;
     revisionCycles?: number | null;
     exclusions?: string | null;
+
+    // Payment & Support
+    paymentSchedule?: string | null;
+    postDeliverySupport?: string | null;
 }
 
 export interface FacturePDFData {

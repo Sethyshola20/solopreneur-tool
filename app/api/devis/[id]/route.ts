@@ -57,10 +57,14 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
                 date: validatedData.date,
                 validUntil: validatedData.validUntil || null,
                 total: total.toString(),
+                projectDescription: validatedData.projectDescription ?? null,
+                specificationReference: validatedData.specificationReference ?? null,
                 deliveryTimeWeeks: validatedData.deliveryTimeWeeks ?? null,
                 deliverables: validatedData.deliverables ?? null,
                 revisionCycles: validatedData.revisionCycles ?? null,
                 exclusions: validatedData.exclusions ?? null,
+                paymentSchedule: validatedData.paymentSchedule ?? null,
+                postDeliverySupport: validatedData.postDeliverySupport ?? null,
                 updatedAt: new Date(),
             })
             .where(and(eq(devis.id, id), eq(devis.userId, user.id)))

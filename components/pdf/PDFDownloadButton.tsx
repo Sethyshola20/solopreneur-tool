@@ -91,6 +91,20 @@ export function DevisPDFDownloadButton({
                 items,
                 total: Number(devis.total),
                 status: devis.status as DevisPDFData['status'],
+
+                // Project Details
+                projectDescription: devis.projectDescription,
+                specificationReference: devis.specificationReference,
+
+                // General Conditions
+                deliveryTimeWeeks: devis.deliveryTimeWeeks,
+                deliverables: devis.deliverables,
+                revisionCycles: devis.revisionCycles,
+                exclusions: devis.exclusions,
+
+                // Payment & Support
+                paymentSchedule: devis.paymentSchedule,
+                postDeliverySupport: devis.postDeliverySupport,
             };
 
             await downloadDevisPDF(pdfData);

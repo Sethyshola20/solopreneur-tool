@@ -19,6 +19,8 @@ export async function GET(req: Request) {
             date: devis.date,
             validUntil: devis.validUntil,
             total: devis.total,
+            projectDescription: devis.projectDescription,
+            specificationReference: devis.specificationReference,
             deliveryTimeWeeks: devis.deliveryTimeWeeks,
             deliverables: devis.deliverables,
             revisionCycles: devis.revisionCycles,
@@ -72,10 +74,14 @@ export async function POST(req: Request) {
             date: validatedData.date,
             validUntil: validatedData.validUntil || null,
             total: total.toString(),
+            projectDescription: validatedData.projectDescription ?? null,
+            specificationReference: validatedData.specificationReference ?? null,
             deliveryTimeWeeks: validatedData.deliveryTimeWeeks ?? null,
             deliverables: validatedData.deliverables ?? null,
             revisionCycles: validatedData.revisionCycles ?? null,
             exclusions: validatedData.exclusions ?? null,
+            paymentSchedule: validatedData.paymentSchedule ?? null,
+            postDeliverySupport: validatedData.postDeliverySupport ?? null,
         }).returning();
 
         // Create the items

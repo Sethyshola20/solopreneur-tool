@@ -10,12 +10,7 @@ interface DevisDocumentProps {
 }
 
 export const DevisDocument: React.FC<DevisDocumentProps> = ({ data }) => {
-    const { number, date, validUntil, company, client, items, total, status } = data;
-
-    console.log({
-        price: total,
-        formattedPrice: formatCurrency(total),
-    })
+    const { number, date, validUntil, company, client, items, total, projectDescription, specificationReference, deliveryTimeWeeks, deliverables, revisionCycles, exclusions, paymentSchedule, postDeliverySupport } = data;
     return (
         <Document>
             <Page size="A4" style={styles.page}>
@@ -100,6 +95,23 @@ export const DevisDocument: React.FC<DevisDocumentProps> = ({ data }) => {
                     </View>
                 </View>
 
+                {/* Project Description */}
+                {projectDescription && (
+                    <View style={styles.paymentSection}>
+                        <Text style={styles.paymentTitle}>Description de la prestation</Text>
+                        <Text style={styles.paymentText}>{projectDescription}</Text>
+                    </View>
+                )}
+
+                {/* Specification Reference */}
+                {specificationReference && (
+                    <View style={styles.legalSection}>
+                        <Text style={styles.legalText}>
+                            {specificationReference}
+                        </Text>
+                    </View>
+                )}
+
                 {/* VAT Exemption Notice */}
                 <View style={styles.legalSection}>
                     <Text style={styles.vatExemption}>
@@ -118,29 +130,41 @@ export const DevisDocument: React.FC<DevisDocumentProps> = ({ data }) => {
                     </Text>
                 </View>
 
-                {/* General Conditions */}
-                {(data.deliveryTimeWeeks || data.deliverables || data.revisionCycles || data.exclusions) && (
+                {/* General Conditions - Combined Section */}
+                {(deliveryTimeWeeks || deliverables || revisionCycles || exclusions || paymentSchedule || postDeliverySupport) && (
                     <View style={styles.paymentSection}>
-                        <Text style={styles.paymentTitle}>Conditions générales</Text>
-                        {data.deliveryTimeWeeks && (
+                        <Text style={styles.paymentTitle}>Conditions de réalisation</Text>
+                        {deliveryTimeWeeks && (
                             <Text style={styles.paymentText}>
-                                • Délai de réalisation : {data.deliveryTimeWeeks} {data.deliveryTimeWeeks === 1 ? 'semaine' : 'semaines'} à partir de la signature
+                                • Délai : {deliveryTimeWeeks} {deliveryTimeWeeks === 1 ? 'semaine' : 'semaines'} à compter de la signature
                             </Text>
                         )}
-                        {data.deliverables && (
+                        {paymentSchedule && (
                             <Text style={styles.paymentText}>
-                                • Livrables : {data.deliverables}
+                                • Modalités de paiement : {paymentSchedule}
                             </Text>
                         )}
-                        {data.revisionCycles && (
+                        {revisionCycles && (
                             <Text style={styles.paymentText}>
-                                • Cycles de révisions inclus : {data.revisionCycles} {data.revisionCycles === 1 ? 'cycle' : 'cycles'} de corrections
+                                • Cycles de révisions : {revisionCycles} {revisionCycles === 1 ? 'cycle' : 'cycles'} de corrections inclus
                             </Text>
                         )}
-                        {data.exclusions && (
+                        {postDeliverySupport && (
                             <Text style={styles.paymentText}>
-                                • Exclusions : {data.exclusions}
+                                • Support post-livraison : {postDeliverySupport}
                             </Text>
+                        )}
+                        {deliverables && (
+                            <>
+                                <Text style={styles.paymentSubtitle}>Livrables</Text>
+                                <Text style={styles.paymentText}>{deliverables}</Text>
+                            </>
+                        )}
+                        {exclusions && (
+                            <>
+                                <Text style={styles.paymentSubtitle}>Exclusions</Text>
+                                <Text style={styles.paymentText}>{exclusions}</Text>
+                            </>
                         )}
                     </View>
                 )}

@@ -50,10 +50,14 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                 quantity: Number(item.quantity),
                 price: Number(item.price),
             })),
+            projectDescription: initialData.projectDescription ?? null,
+            specificationReference: initialData.specificationReference ?? null,
             deliveryTimeWeeks: initialData.deliveryTimeWeeks ?? null,
             deliverables: initialData.deliverables ?? null,
             revisionCycles: initialData.revisionCycles ?? null,
             exclusions: initialData.exclusions ?? null,
+            paymentSchedule: initialData.paymentSchedule ?? null,
+            postDeliverySupport: initialData.postDeliverySupport ?? null,
         }
         : undefined;
 
@@ -71,10 +75,14 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                     price: 1,
                 }
             ],
+            projectDescription: null,
+            specificationReference: null,
             deliveryTimeWeeks: null,
             deliverables: null,
             revisionCycles: null,
             exclusions: null,
+            paymentSchedule: null,
+            postDeliverySupport: null,
         },
     });
 
@@ -89,6 +97,14 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
             date: new Date().toISOString().split("T")[0],
             validUntil: "",
             status: 'draft' as 'draft' | 'sent' | 'accepted' | 'rejected',
+            projectDescription: null,
+            specificationReference: null,
+            deliveryTimeWeeks: null,
+            deliverables: null,
+            revisionCycles: null,
+            exclusions: null,
+            paymentSchedule: null,
+            postDeliverySupport: null,
             items: [
                 {
                     description: "",
@@ -101,13 +117,12 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
 
     // Show conditions section if any field has a value
     useEffect(() => {
-        if (initialData && (initialData.deliveryTimeWeeks || initialData.deliverables || initialData.revisionCycles || initialData.exclusions)) {
+        if (initialData && (initialData.projectDescription || initialData.specificationReference || initialData.deliveryTimeWeeks || initialData.deliverables || initialData.revisionCycles || initialData.exclusions || initialData.paymentSchedule || initialData.postDeliverySupport)) {
             setShowConditions(true);
         }
     }, [initialData]);
 
     const onSubmit = async (data: DevisSchema) => {
-        console.log('Submit data:', data);
         const mutation = devisId ? updateMutation : createMutation;
 
         toast.promise(
@@ -305,7 +320,7 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                             ))}
                         </div>
 
-                        {/* Conditions générales - Collapsible section */}
+                        {/* Détails du projet & Conditions - Collapsible section */}
                         <div className="pt-4 border-t">
                             <Button
                                 type="button"
@@ -315,11 +330,53 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                                 onClick={() => setShowConditions(!showConditions)}
                             >
                                 {showConditions ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                                Conditions générales (optionnel)
+                                Détails du projet & Conditions (optionnel)
                             </Button>
 
                             {showConditions && (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 p-4 bg-muted/30 rounded-md">
+                                    {/* Project Details */}
+                                    <FormField
+                                        control={form.control}
+                                        name="projectDescription"
+                                        render={({ field }) => (
+                                            <FormItem className="md:col-span-2">
+                                                <FormLabel>Description de la prestation</FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        placeholder="Ex: Développement d'une plateforme web de gestion incluant : espace admin, gestion d'entreprises, etc."
+                                                        {...field}
+                                                        value={field.value ?? ''}
+                                                        onChange={(e) => field.onChange(e.target.value || null)}
+                                                        rows={3}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="specificationReference"
+                                        render={({ field }) => (
+                                            <FormItem className="md:col-span-2">
+                                                <FormLabel>Référence au cahier des charges</FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        placeholder="Ex: Le présent devis est établi sur la base du cahier des charges 'MVP Liveo Conformité V1.0' daté du..."
+                                                        {...field}
+                                                        value={field.value ?? ''}
+                                                        onChange={(e) => field.onChange(e.target.value || null)}
+                                                        rows={2}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    {/* General Conditions */}
                                     <FormField
                                         control={form.control}
                                         name="deliveryTimeWeeks"
@@ -329,7 +386,7 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                                                 <FormControl>
                                                     <Input
                                                         type="number"
-                                                        placeholder="Ex: 4"
+                                                        placeholder="Ex: 12"
                                                         {...field}
                                                         value={field.value ?? ''}
                                                         onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : null)}
@@ -362,17 +419,57 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
 
                                     <FormField
                                         control={form.control}
+                                        name="paymentSchedule"
+                                        render={({ field }) => (
+                                            <FormItem className="md:col-span-2">
+                                                <FormLabel>Modalités de paiement</FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        placeholder="Ex: 30% à la signature, 40% à mi-parcours, 30% à la livraison finale"
+                                                        {...field}
+                                                        value={field.value ?? ''}
+                                                        onChange={(e) => field.onChange(e.target.value || null)}
+                                                        rows={2}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="postDeliverySupport"
+                                        render={({ field }) => (
+                                            <FormItem className="md:col-span-2">
+                                                <FormLabel>Support post-livraison</FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        placeholder="Ex: 1 mois de corrections de bugs critiques"
+                                                        {...field}
+                                                        value={field.value ?? ''}
+                                                        onChange={(e) => field.onChange(e.target.value || null)}
+                                                        rows={2}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
                                         name="deliverables"
                                         render={({ field }) => (
                                             <FormItem className="md:col-span-2">
                                                 <FormLabel>Livrables</FormLabel>
                                                 <FormControl>
                                                     <Textarea
-                                                        placeholder="Ex: Code source, documentation technique, accès repository Git"
+                                                        placeholder="Ex: Code source complet (backend NestJS + frontend React), Base de données PostgreSQL configurée, Configuration Docker, Documentation technique"
                                                         {...field}
                                                         value={field.value ?? ''}
                                                         onChange={(e) => field.onChange(e.target.value || null)}
-                                                        rows={2}
+                                                        rows={3}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -388,11 +485,11 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                                                 <FormLabel>Exclusions</FormLabel>
                                                 <FormControl>
                                                     <Textarea
-                                                        placeholder="Ex: Hébergement, maintenance post-livraison, formations, évolutions futures"
+                                                        placeholder="Ex: Hébergement et nom de domaine, Maintenance après la période de support, Formations utilisateurs, Fonctionnalités V2"
                                                         {...field}
                                                         value={field.value ?? ''}
                                                         onChange={(e) => field.onChange(e.target.value || null)}
-                                                        rows={2}
+                                                        rows={3}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
