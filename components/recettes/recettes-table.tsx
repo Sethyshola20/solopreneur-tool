@@ -13,12 +13,11 @@ import { Download, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { format } from 'date-fns';
 import { useRecettesList } from '@/hooks/use-recettes';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from '@/components/ui/empty';
 
 export function RecettesTable() {
     const { data: recettesList, isLoading, error } = useRecettesList();
-
-    if (isLoading) return <div>Chargement...</div>;
-    if (error) return <div>Erreur lors du chargement des recettes</div>;
 
     const exportToCSV = () => {
         if (!recettesList || recettesList?.length === 0) return;
@@ -59,42 +58,61 @@ export function RecettesTable() {
                 </Button>
             </CardHeader>
             <CardContent>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Date</TableHead>
-                            <TableHead>Numéro Facture</TableHead>
-                            <TableHead>Client</TableHead>
-                            <TableHead>Montant</TableHead>
-                            <TableHead>Mode de Paiement</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {recettesList?.map((item) => (
-                            <TableRow key={item.id}>
-                                <TableCell>{format(new Date(item.date), 'dd/MM/yyyy')}</TableCell>
-                                <TableCell>{item.factureNumber || '-'}</TableCell>
-                                <TableCell>{item.clientName || '-'}</TableCell>
-                                <TableCell className="font-medium">{Number(item.amount).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</TableCell>
-                                <TableCell>{item.paymentMethod || '-'}</TableCell>
-                            </TableRow>
+                {isLoading ? (
+                    <div className="space-y-3">
+                        {[...Array(5)].map((_, i) => (
+                            <div key={i} className="flex items-center gap-4">
+                                <Skeleton className="h-12 w-full" />
+                            </div>
                         ))}
-                        {recettesList?.length === 0 && (
-                            <TableRow>
-                                <TableCell colSpan={5} className="text-center text-muted-foreground">
-                                    Aucune recette trouvée.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-                {recettesList && recettesList.length > 0 && (
-                    <div className="mt-4 flex justify-end">
-                        <div className="text-right">
-                            <span className="text-muted-foreground mr-4">Total:</span>
-                            <span className="text-xl font-bold">{total.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</span>
-                        </div>
                     </div>
+                ) : error ? (
+                    <div className="text-center text-red-500 p-6">
+                        Erreur lors du chargement des recettes
+                    </div>
+                ) : recettesList && recettesList.length > 0 ? (
+                    <>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Date</TableHead>
+                                    <TableHead>Numéro Facture</TableHead>
+                                    <TableHead>Client</TableHead>
+                                    <TableHead>Montant</TableHead>
+                                    <TableHead>Mode de Paiement</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {recettesList?.map((item) => (
+                                    <TableRow key={item.id}>
+                                        <TableCell>{format(new Date(item.date), 'dd/MM/yyyy')}</TableCell>
+                                        <TableCell>{item.factureNumber || '-'}</TableCell>
+                                        <TableCell>{item.clientName || '-'}</TableCell>
+                                        <TableCell className="font-medium">{Number(item.amount).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</TableCell>
+                                        <TableCell>{item.paymentMethod || '-'}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                        <div className="mt-4 flex justify-end">
+                            <div className="text-right">
+                                <span className="text-muted-foreground mr-4">Total:</span>
+                                <span className="text-xl font-bold">{total.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</span>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <Empty>
+                        <EmptyHeader>
+                            <EmptyMedia variant="icon">
+                                <FileText />
+                            </EmptyMedia>
+                            <EmptyTitle>Aucune recette</EmptyTitle>
+                            <EmptyDescription>
+                                Les recettes sont automatiquement enregistrées lorsque vous marquez une facture comme payée.
+                            </EmptyDescription>
+                        </EmptyHeader>
+                    </Empty>
                 )}
             </CardContent>
         </Card>
