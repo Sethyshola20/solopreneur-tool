@@ -25,6 +25,9 @@ export async function GET(req: Request) {
             deliverables: devis.deliverables,
             revisionCycles: devis.revisionCycles,
             exclusions: devis.exclusions,
+            paymentSchedule: devis.paymentSchedule,
+            postDeliverySupport: devis.postDeliverySupport,
+            ipRightsTransfer: devis.ipRightsTransfer,
 
             createdAt: devis.createdAt,
             updatedAt: devis.updatedAt,
@@ -82,6 +85,7 @@ export async function POST(req: Request) {
             exclusions: validatedData.exclusions ?? null,
             paymentSchedule: validatedData.paymentSchedule ?? null,
             postDeliverySupport: validatedData.postDeliverySupport ?? null,
+            ipRightsTransfer: validatedData.ipRightsTransfer ?? null,
         }).returning();
 
         // Create the items
