@@ -41,6 +41,9 @@ export const devis = pgTable('devis', {
     paymentSchedule: text('payment_schedule'),
     postDeliverySupport: text('post_delivery_support'),
 
+    // Legal clauses
+    ipRightsTransfer: text('ip_rights_transfer'),
+
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });

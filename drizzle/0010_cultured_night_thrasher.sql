@@ -1,0 +1,1 @@
+ALTER TABLE "devis" ADD COLUMN "ip_rights_transfer" text;

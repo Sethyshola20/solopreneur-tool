@@ -58,6 +58,7 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
             exclusions: initialData.exclusions ?? null,
             paymentSchedule: initialData.paymentSchedule ?? null,
             postDeliverySupport: initialData.postDeliverySupport ?? null,
+            ipRightsTransfer: initialData.ipRightsTransfer ?? null,
         }
         : undefined;
 
@@ -83,6 +84,7 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
             exclusions: null,
             paymentSchedule: null,
             postDeliverySupport: null,
+            ipRightsTransfer: null,
         },
     });
 
@@ -105,6 +107,7 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
             exclusions: null,
             paymentSchedule: null,
             postDeliverySupport: null,
+            ipRightsTransfer: null,
             items: [
                 {
                     description: "",
@@ -117,7 +120,7 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
 
     // Show conditions section if any field has a value
     useEffect(() => {
-        if (initialData && (initialData.projectDescription || initialData.specificationReference || initialData.deliveryTimeWeeks || initialData.deliverables || initialData.revisionCycles || initialData.exclusions || initialData.paymentSchedule || initialData.postDeliverySupport)) {
+        if (initialData && (initialData.projectDescription || initialData.specificationReference || initialData.deliveryTimeWeeks || initialData.deliverables || initialData.revisionCycles || initialData.exclusions || initialData.paymentSchedule || initialData.postDeliverySupport || initialData.ipRightsTransfer)) {
             setShowConditions(true);
         }
     }, [initialData]);
@@ -490,6 +493,26 @@ export function DevisForm({ open, onOpenChange, devisId, initialData }: DevisFor
                                                         value={field.value ?? ''}
                                                         onChange={(e) => field.onChange(e.target.value || null)}
                                                         rows={3}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="ipRightsTransfer"
+                                        render={({ field }) => (
+                                            <FormItem className="md:col-span-2">
+                                                <FormLabel>Cession de droits de propriété intellectuelle</FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        placeholder="Ex: Le Prestataire cède à titre exclusif au Client l'intégralité des droits de propriété intellectuelle afférents aux développements réalisés..."
+                                                        {...field}
+                                                        value={field.value ?? ''}
+                                                        onChange={(e) => field.onChange(e.target.value || null)}
+                                                        rows={4}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />

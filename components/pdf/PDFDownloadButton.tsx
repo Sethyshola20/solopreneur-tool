@@ -105,6 +105,9 @@ export function DevisPDFDownloadButton({
                 // Payment & Support
                 paymentSchedule: devis.paymentSchedule,
                 postDeliverySupport: devis.postDeliverySupport,
+
+                // Legal clauses
+                ipRightsTransfer: devis.ipRightsTransfer,
             };
 
             await downloadDevisPDF(pdfData);

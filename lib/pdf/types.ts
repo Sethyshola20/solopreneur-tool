@@ -55,6 +55,9 @@ export interface DevisPDFData {
     // Payment & Support
     paymentSchedule?: string | null;
     postDeliverySupport?: string | null;
+
+    // Legal clauses
+    ipRightsTransfer?: string | null;
 }
 
 export interface FacturePDFData {

@@ -27,6 +27,9 @@ export const devisSchema = z.object({
     // Payment & Support
     paymentSchedule: z.string().optional().nullable(),
     postDeliverySupport: z.string().optional().nullable(),
+
+    // Legal clauses
+    ipRightsTransfer: z.string().optional().nullable(),
 });
 
 

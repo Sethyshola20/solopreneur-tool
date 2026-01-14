@@ -10,7 +10,7 @@ interface DevisDocumentProps {
 }
 
 export const DevisDocument: React.FC<DevisDocumentProps> = ({ data }) => {
-    const { number, date, validUntil, company, client, items, total, projectDescription, specificationReference, deliveryTimeWeeks, deliverables, revisionCycles, exclusions, paymentSchedule, postDeliverySupport } = data;
+    const { number, date, validUntil, company, client, items, total, projectDescription, specificationReference, deliveryTimeWeeks, deliverables, revisionCycles, exclusions, paymentSchedule, postDeliverySupport, ipRightsTransfer } = data;
     return (
         <Document>
             <Page size="A4" style={styles.page}>
@@ -166,6 +166,14 @@ export const DevisDocument: React.FC<DevisDocumentProps> = ({ data }) => {
                                 <Text style={styles.paymentText}>{exclusions}</Text>
                             </>
                         )}
+                    </View>
+                )}
+
+                {/* IP Rights Transfer Clause */}
+                {ipRightsTransfer && (
+                    <View style={styles.paymentSection}>
+                        <Text style={styles.paymentTitle}>Cession de droits de propriété intellectuelle</Text>
+                        <Text style={styles.paymentText}>{ipRightsTransfer}</Text>
                     </View>
                 )}
 

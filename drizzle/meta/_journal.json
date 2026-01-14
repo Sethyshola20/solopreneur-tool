@@ -71,6 +71,13 @@
       "when": 1767182056591,
       "tag": "0009_medical_madrox",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1768409263888,
+      "tag": "0010_cultured_night_thrasher",
+      "breakpoints": true
     }
   ]
 }
