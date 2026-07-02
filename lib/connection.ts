@@ -4,25 +4,25 @@ import z from "zod";
 import { authClient } from "./auth/auth-client";
 
 export const signinSchema = z.object({
-    email: z.string().email({ message: "Invalid email address" }),
+    email: z.string().email({ message: "Adresse e-mail invalide" }),
     password: z
         .string()
-        .min(8, { message: "Password must be at least 8 characters" }),
+        .min(8, { message: "8 caractères minimum" }),
 });
 
 export const signupSchema = z
     .object({
-        name: z.string().max(20),
-        email: z.string().email({ message: "Invalid email address" }),
+        name: z.string().min(1, { message: "Champ requis" }).max(20),
+        email: z.string().email({ message: "Adresse e-mail invalide" }),
         password: z
             .string()
-            .min(8, { message: "Password must be at least 8 characters" }),
+            .min(8, { message: "8 caractères minimum" }),
         confirmPassword: z
             .string()
-            .min(8, { message: "Password must be at least 8 characters" }),
+            .min(8, { message: "8 caractères minimum" }),
     })
     .refine((data) => data.password === data.confirmPassword, {
-        message: "Passwords do not match",
+        message: "Les mots de passe ne correspondent pas",
         path: ["confirmPassword"],
     });
 
@@ -43,7 +43,7 @@ export function useSignIn() {
             },
             {
                 onRequest: (ctx) => {
-                    loadingToastId = toast.loading("Connection...");
+                    loadingToastId = toast.loading("Connexion en cours...");
                 },
                 onSuccess: async (ctx) => {
                     loadingToastId && toast.dismiss(loadingToastId);
@@ -87,7 +87,7 @@ export function useSignUp() {
             },
             {
                 onRequest: () => {
-                    loadingToastId = toast.loading("Connection...");
+                    loadingToastId = toast.loading("Création du compte...");
                 },
                 onSuccess: async () => {
                     loadingToastId && toast.dismiss(loadingToastId);

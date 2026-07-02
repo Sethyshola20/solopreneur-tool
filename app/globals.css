@@ -173,3 +173,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes drift-a {
+  0% {
+    transform: translate3d(-6%, -4%, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(4%, 6%, 0) scale(1.08);
+  }
+}
+
+@keyframes drift-b {
+  0% {
+    transform: translate3d(5%, 3%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-5%, -5%, 0) scale(0.95);
+  }
+}
