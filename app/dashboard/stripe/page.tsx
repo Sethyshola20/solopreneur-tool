@@ -155,7 +155,7 @@ export default function StripePage() {
             <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {accounts?.map((account) => {
                     const accountProducts = productsByAccount?.[account.id] || [];
-                    const productCount = accountProducts.length;
+                    const productCount = new Set(accountProducts.map((p) => p.stripeProductId)).size;
                     const isSyncing = syncMutation.isPending && syncMutation.variables === account.id;
                     const lastSync = account.lastSyncAt
                         ? format(new Date(account.lastSyncAt), 'dd MMM yyyy, HH:mm', { locale: fr })

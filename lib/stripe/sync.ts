@@ -7,64 +7,66 @@ import { nanoid } from 'nanoid';
 export async function syncProducts(accountId: string, userId: string) {
     const stripe = await getStripeClient(accountId);
 
-    const stripeProducts = await stripe.products.list({ limit: 100, active: true });
+    // Fetch products and prices in parallel (a product may have several prices,
+    // e.g. monthly + yearly, and often has no `default_price` set).
+    const [stripeProducts, stripePrices] = await Promise.all([
+        stripe.products.list({ limit: 100, active: true }),
+        stripe.prices.list({ limit: 100, active: true }),
+    ]);
 
-    const syncedProducts = [];
-
-    for (const product of stripeProducts.data) {
-        const defaultPrice = product.default_price
-            ? await stripe.prices.retrieve(product.default_price as string)
-            : null;
-
-        const [existingProduct] = await db.select()
-            .from(products)
-            .where(eq(products.stripeProductId, product.id))
-            .limit(1);
-
-        if (existingProduct) {
-            const [updated] = await db.update(products)
-                .set({
-                    name: product.name,
-                    description: product.description,
-                    price: defaultPrice ? (defaultPrice.unit_amount! / 100).toString() : null,
-                    currency: defaultPrice?.currency?.toUpperCase() || 'EUR',
-                    isRecurring: defaultPrice?.type === 'recurring',
-                    billingPeriod: defaultPrice?.recurring?.interval || null,
-                    stripePriceId: defaultPrice?.id || null,
-                    isActive: product.active,
-                    metadata: JSON.stringify(product.metadata),
-                    updatedAt: new Date(),
-                })
-                .where(eq(products.id, existingProduct.id))
-                .returning();
-
-            syncedProducts.push(updated);
-        } else {
-            const [created] = await db.insert(products).values({
-                id: nanoid(),
-                userId,
-                stripeAccountId: accountId,
-                stripeProductId: product.id,
-                stripePriceId: defaultPrice?.id || null,
-                name: product.name,
-                description: product.description,
-                price: defaultPrice ? (defaultPrice.unit_amount! / 100).toString() : null,
-                currency: defaultPrice?.currency?.toUpperCase() || 'EUR',
-                isRecurring: defaultPrice?.type === 'recurring',
-                billingPeriod: defaultPrice?.recurring?.interval || null,
-                isActive: product.active,
-                metadata: JSON.stringify(product.metadata),
-            }).returning();
-
-            syncedProducts.push(created);
-        }
+    const pricesByProduct = new Map<string, typeof stripePrices.data>();
+    for (const price of stripePrices.data) {
+        const productId = typeof price.product === 'string' ? price.product : price.product.id;
+        const bucket = pricesByProduct.get(productId);
+        if (bucket) bucket.push(price);
+        else pricesByProduct.set(productId, [price]);
     }
 
-    await db.update(stripeAccounts)
+    // Build one row per active price so every tier is represented. Products with
+    // no active price still get a single row (price left null).
+    const rows = stripeProducts.data.flatMap((product) => {
+        const prices = (pricesByProduct.get(product.id) ?? []).sort(
+            (a, b) => (a.unit_amount ?? 0) - (b.unit_amount ?? 0)
+        );
+
+        const build = (price: (typeof stripePrices.data)[number] | null) => ({
+            id: nanoid(),
+            userId,
+            stripeAccountId: accountId,
+            stripeProductId: product.id,
+            stripePriceId: price?.id ?? null,
+            // Prefer the price nickname (e.g. "Cockpit Yearly") so multi-price
+            // products stay distinguishable; fall back to the product name.
+            name: price?.nickname || product.name,
+            description: product.description,
+            price: price?.unit_amount != null ? (price.unit_amount / 100).toString() : null,
+            currency: (price?.currency ?? 'eur').toUpperCase(),
+            isRecurring: price?.type === 'recurring',
+            billingPeriod: price?.recurring?.interval ?? null,
+            isActive: product.active,
+            metadata: JSON.stringify(product.metadata),
+        });
+
+        return prices.length > 0 ? prices.map(build) : [build(null)];
+    });
+
+    // Replace the account's product rows with a fresh snapshot from Stripe in a
+    // single atomic batch (the neon-http driver has no interactive transactions).
+    // `subscriptions.productId` is `set null` on delete and is not populated by
+    // the sync, so replacing rows is safe.
+    const deleteQuery = db.delete(products).where(eq(products.stripeAccountId, accountId));
+    const touchQuery = db.update(stripeAccounts)
         .set({ lastSyncAt: new Date() })
         .where(eq(stripeAccounts.id, accountId));
 
-    return syncedProducts;
+    if (rows.length === 0) {
+        await db.batch([deleteQuery, touchQuery]);
+        return [];
+    }
+
+    const insertQuery = db.insert(products).values(rows).returning();
+    const [, inserted] = await db.batch([deleteQuery, insertQuery, touchQuery]);
+    return inserted;
 }
 
 export async function syncSubscriptions(accountId: string, userId: string) {

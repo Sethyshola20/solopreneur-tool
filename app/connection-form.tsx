@@ -84,7 +84,7 @@ export function ConnectionForm() {
         <div className="w-full">
             <div className="relative grid grid-cols-2 rounded-full border border-border bg-muted/40 p-1">
                 <div
-                    className="absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full bg-background shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    className="cursor-pointer absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full bg-background shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
                     style={{ transform: mode === "signup" ? "translateX(calc(100%+4px))" : "translateX(0)" }}
                 />
                 <button

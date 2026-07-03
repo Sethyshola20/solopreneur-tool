@@ -11,6 +11,7 @@ export type StripeProduct = {
     currency: string;
     isRecurring?: boolean;
     billingPeriod?: string | null;
+    stripeProductId?: string;
 };
 
 const PERIOD_LABELS: Record<string, string> = {
@@ -79,17 +80,21 @@ function ProductRow({ product, index }: { product: StripeProduct; index: number 
 
 export function ProductList({ products }: { products: StripeProduct[] | undefined }) {
     const [expanded, setExpanded] = useState(false);
-    const total = products?.length ?? 0;
-    const hiddenCount = Math.max(total - PREVIEW_COUNT, 0);
-    const visible = expanded ? products ?? [] : (products ?? []).slice(0, PREVIEW_COUNT);
+    const rows = products ?? [];
+    const rowCount = rows.length;
+    // A single product can expose several prices (e.g. monthly + yearly), so the
+    // header counts distinct products while the list shows every price tier.
+    const productCount = new Set(rows.map((p) => p.stripeProductId ?? p.id)).size;
+    const hiddenCount = Math.max(rowCount - PREVIEW_COUNT, 0);
+    const visible = expanded ? rows : rows.slice(0, PREVIEW_COUNT);
 
     return (
         <div className="space-y-2">
             <div className="flex items-center text-xs font-medium text-muted-foreground">
-                <Layers3 className="mr-1.5 h-3.5 w-3.5" /> Produits ({total})
+                <Layers3 className="mr-1.5 h-3.5 w-3.5" /> Produits ({productCount})
             </div>
 
-            {total === 0 ? (
+            {rowCount === 0 ? (
                 <p className="rounded-md border border-dashed border-border py-3 text-center text-xs text-muted-foreground">
                     Aucun produit synchronisé
                 </p>
@@ -112,9 +117,7 @@ export function ProductList({ products }: { products: StripeProduct[] | undefine
                     className="group flex w-full items-center justify-center gap-1 rounded-md py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground active:scale-[0.99]"
                     aria-expanded={expanded}
                 >
-                    {expanded
-                        ? "Voir moins"
-                        : `Voir ${hiddenCount} produit${hiddenCount > 1 ? "s" : ""} de plus`}
+                    {expanded ? "Voir moins" : `Voir ${hiddenCount} tarif${hiddenCount > 1 ? "s" : ""} de plus`}
                     <ChevronDown
                         className={cn(
                             "size-3.5 transition-transform duration-200",
