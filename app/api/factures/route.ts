@@ -1,36 +1,15 @@
 import { db } from "@/lib/db/drizzle";
-import { clients, factures, facturesItems, recettes } from "@/lib/db/schema";
+import { factures, facturesItems, recettes } from "@/lib/db/schema";
 import { factureSchema } from "@/lib/validators/factures";
-import { eq, desc, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { runWithAuthAPI } from "@/lib/api/run-with-auth";
 import { successResponse, errorResponse } from "@/lib/api/response";
+import { getFacturesByUser } from "@/lib/server/dashboard-queries";
 
 export async function GET(req: Request) {
     return runWithAuthAPI(async (user) => {
-        const rows = await db.select({
-            id: factures.id,
-            userId: factures.userId,
-            clientId: factures.clientId,
-            number: factures.number,
-            status: factures.status,
-            clientName: clients.name,
-            items: sql`json_agg(${facturesItems})`.as("items"),
-            date: factures.date,
-            dueDate: factures.dueDate,
-            serviceStartDate: factures.serviceStartDate,
-            serviceEndDate: factures.serviceEndDate,
-            total: factures.total,
-            createdAt: factures.createdAt,
-            updatedAt: factures.updatedAt,
-            devisId: factures.devisId,
-        })
-            .from(factures)
-            .leftJoin(facturesItems, eq(factures.id, facturesItems.factureId))
-            .leftJoin(clients, eq(factures.clientId, clients.id))
-            .where(eq(factures.userId, user.id))
-            .groupBy(factures.id, clients.name)
-            .orderBy(desc(factures.createdAt));
+        const rows = await getFacturesByUser(user.id);
         return successResponse(rows);
     });
 }

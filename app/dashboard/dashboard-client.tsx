@@ -21,7 +21,7 @@ import {
 import { useStripeStats } from '@/hooks/use-stripe';
 import { StripeAccountsList } from '@/components/dashboard/stripe-accounts-list';
 
-export default function DashboardPage() {
+export default function DashboardClient() {
     const { data: clients } = useClients();
     const { data: devisList } = useDevisList();
     const { data: facturesList } = useFacturesList();

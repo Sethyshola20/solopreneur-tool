@@ -3,17 +3,13 @@ import { clients } from "@/lib/db/schema";
 import { clientSchema } from "@/lib/validators/clients";
 import { runWithAuthAPI } from "@/lib/api/run-with-auth";
 import { validateRequest } from "@/lib/api/validate-request";
-import { eq, desc } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { successResponse, errorResponse } from "@/lib/api/response";
+import { getClientsByUser } from "@/lib/server/dashboard-queries";
 
 export async function GET(req: Request) {
     return runWithAuthAPI(async (user) => {
-        const data = await db.select()
-            .from(clients)
-            .where(eq(clients.userId, user.id))
-            .orderBy(desc(clients.createdAt));
-
+        const data = await getClientsByUser(user.id);
         return successResponse(data);
     });
 }

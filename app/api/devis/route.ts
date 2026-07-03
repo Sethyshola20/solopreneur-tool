@@ -1,47 +1,14 @@
 import { db } from "@/lib/db/drizzle";
-import { clients, devis, devisItems } from "@/lib/db/schema";
+import { devis, devisItems } from "@/lib/db/schema";
 import { devisSchema } from "@/lib/validators/devis";
 import { runWithAuthAPI } from "@/lib/api/run-with-auth";
 import { successResponse } from "@/lib/api/response";
-import { eq, desc, sql } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { getDevisByUser } from "@/lib/server/dashboard-queries";
 
 export async function GET(req: Request) {
     return runWithAuthAPI(async (user) => {
-
-        const rows = await db.select({
-            id: devis.id,
-            userId: devis.userId,
-            clientId: devis.clientId,
-            number: devis.number,
-            status: devis.status,
-            clientName: clients.name,
-            date: devis.date,
-            validUntil: devis.validUntil,
-            total: devis.total,
-            projectDescription: devis.projectDescription,
-            specificationReference: devis.specificationReference,
-            deliveryTimeWeeks: devis.deliveryTimeWeeks,
-            deliverables: devis.deliverables,
-            revisionCycles: devis.revisionCycles,
-            exclusions: devis.exclusions,
-            paymentSchedule: devis.paymentSchedule,
-            postDeliverySupport: devis.postDeliverySupport,
-            ipRightsTransfer: devis.ipRightsTransfer,
-
-            createdAt: devis.createdAt,
-            updatedAt: devis.updatedAt,
-
-            // This aggregates the items into a single JSON array field
-            items: sql`json_agg(${devisItems})`.as("items"),
-        })
-            .from(devis)
-            .leftJoin(devisItems, eq(devis.id, devisItems.devisId))
-            .leftJoin(clients, eq(devis.clientId, clients.id))
-            .where(eq(devis.userId, user.id))
-            .groupBy(devis.id, clients.name) // Grouping prevents row duplication
-            .orderBy(desc(devis.createdAt));
-
+        const rows = await getDevisByUser(user.id);
         return successResponse(rows);
     });
 }
